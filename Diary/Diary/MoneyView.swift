@@ -42,9 +42,13 @@ struct MoneyView: View {
     
     // expenseItems 초기화, category 값을 '.고정비'로 지정
     @State private var expenseItems: [ExpenseItem] = [ExpenseItem(category: .고정비)]
+    
+    @State var gotoEmo = false
 
     var body: some View {
         VStack {
+            NavigationLink(destination: EmotionView(), isActive: self.$gotoEmo, label: {})
+            
             // 지출 항목을 그리드 형식으로 표시
             LazyVGrid(columns: [GridItem(.flexible())]) {
                 // 항목 개수만큼 반복
@@ -146,9 +150,8 @@ struct MoneyView: View {
         .navigationBarTitle("지출 작성하기", displayMode: .inline)
         .navigationBarItems(trailing:
             Button("다음") {
-                print("다음")
-            }
-        )
+            self.gotoEmo.toggle()
+        })
         .padding()
     }
 }
