@@ -16,6 +16,9 @@
 		42317BBF2BCCCDA0006C5658 /* DiaryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42317BBE2BCCCDA0006C5658 /* DiaryTests.swift */; };
 		42317BC92BCCCDA0006C5658 /* DiaryUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42317BC82BCCCDA0006C5658 /* DiaryUITests.swift */; };
 		42317BCB2BCCCDA0006C5658 /* DiaryUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42317BCA2BCCCDA0006C5658 /* DiaryUITestsLaunchTests.swift */; };
+		4297B8172BCCD257009D8C3C /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4297B8162BCCD257009D8C3C /* CalendarView.swift */; };
+		4297B8192BCCD268009D8C3C /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4297B8182BCCD268009D8C3C /* ImagePicker.swift */; };
+		4297B81B2BCCD278009D8C3C /* IamgeMemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4297B81A2BCCD278009D8C3C /* IamgeMemoView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +51,9 @@
 		42317BC42BCCCDA0006C5658 /* DiaryUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DiaryUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		42317BC82BCCCDA0006C5658 /* DiaryUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryUITests.swift; sourceTree = "<group>"; };
 		42317BCA2BCCCDA0006C5658 /* DiaryUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		4297B8162BCCD257009D8C3C /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
+		4297B8182BCCD268009D8C3C /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
+		4297B81A2BCCD278009D8C3C /* IamgeMemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IamgeMemoView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +106,9 @@
 			children = (
 				42317BA82BCCCD9F006C5658 /* DiaryApp.swift */,
 				42317BAA2BCCCD9F006C5658 /* ContentView.swift */,
+				4297B8182BCCD268009D8C3C /* ImagePicker.swift */,
+				4297B8162BCCD257009D8C3C /* CalendarView.swift */,
+				4297B81A2BCCD278009D8C3C /* IamgeMemoView.swift */,
 				42317BAC2BCCCDA0006C5658 /* Assets.xcassets */,
 				42317BB12BCCCDA0006C5658 /* Persistence.swift */,
 				42317BB32BCCCDA0006C5658 /* Diary.xcdatamodeld */,
@@ -263,8 +272,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4297B8172BCCD257009D8C3C /* CalendarView.swift in Sources */,
 				42317BB22BCCCDA0006C5658 /* Persistence.swift in Sources */,
 				42317BAB2BCCCD9F006C5658 /* ContentView.swift in Sources */,
+				4297B81B2BCCD278009D8C3C /* IamgeMemoView.swift in Sources */,
+				4297B8192BCCD268009D8C3C /* ImagePicker.swift in Sources */,
 				42317BA92BCCCD9F006C5658 /* DiaryApp.swift in Sources */,
 				42317BB52BCCCDA0006C5658 /* Diary.xcdatamodeld in Sources */,
 			);

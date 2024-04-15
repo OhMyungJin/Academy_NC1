@@ -14,7 +14,7 @@ struct DiaryApp: App {
     var body: some Scene {
         WindowGroup {
             NavigationView {
-                ContentView()
+                CalendarView()
                     .environment(\.managedObjectContext, persistenceController.container.viewContext)
             }
         }
