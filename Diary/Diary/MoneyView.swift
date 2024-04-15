@@ -15,8 +15,8 @@ enum Category: String, CaseIterable, Identifiable {
     // 카테고리 이름 반환
     var category: String {
         switch self {
-        case .생활비: return "생활비"
         case .고정비: return "고정비"
+        case .생활비: return "생활비"
         case .활동비: return "활동비"
         case .친목비: return "친목비"
         case .꾸밈비: return "꾸밈비"

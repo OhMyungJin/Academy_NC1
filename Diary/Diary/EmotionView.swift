@@ -9,6 +9,7 @@ import SwiftUI
 
 struct EmotionView: View {
     
+    // 각 감정의 수치
     @State private var sliderValue1 = 0.0
     @State private var sliderValue2 = 0.0
     @State private var sliderValue3 = 0.0
@@ -31,6 +32,7 @@ struct EmotionView: View {
             Spacer()
             
             Text("행복😊")
+            // Slider 구현
             HStack {
                 
                 Slider(value: $sliderValue1, in: minimumValue...maximumValue)
@@ -83,16 +85,15 @@ struct EmotionView: View {
                 Text("\(Int(sliderValue5))")
                     .frame(width: 40)
             }
-            .navigationBarTitle("지출 작성하기", displayMode: .inline)
-            .navigationBarItems(trailing:
-                Button("완료") {
-                    print("완료")
-                }
-            )
             .padding(.init(top: 0, leading: 16, bottom: 24, trailing: 16))
             
             Spacer()
         }
+        .navigationBarTitle("지출 작성하기", displayMode: .inline)
+        .navigationBarItems(trailing:
+            Button("완료") {
+                print("완료")
+        })
     }
 }
 
