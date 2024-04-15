@@ -15,9 +15,9 @@ struct ImageMemoView: View {
     // ImagePicker boolean값
     @State private var openPhoto = false
     @State private var image: UIImage? = nil
-    
     // TextEditor에 작성될 문자열
     @State var diary: String = ""
+    @State var gotoMoney = false
     
     // 기본 이미지 설정
     let defaultImage = UIImage(named: "이미지추가")
@@ -25,6 +25,7 @@ struct ImageMemoView: View {
     
     var body: some View {
         VStack{
+            NavigationLink(destination: MoneyView(), isActive: self.$gotoMoney, label: {})
             // 일단 버튼 모양 '이미지추가'로 대체
             Button {
                 self.openPhoto = true
@@ -58,7 +59,7 @@ struct ImageMemoView: View {
         .navigationBarTitle("일기 작성하기", displayMode: .inline)
         .navigationBarItems(trailing:
             Button("다음") {
-            print("다음")
+            self.gotoMoney.toggle()
         })
         .padding()
         // ImagePicker 표시
