@@ -54,6 +54,7 @@
 		4297B8162BCCD257009D8C3C /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		4297B8182BCCD268009D8C3C /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		4297B81A2BCCD278009D8C3C /* IamgeMemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IamgeMemoView.swift; sourceTree = "<group>"; };
+		4297B81C2BCCD35A009D8C3C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +105,7 @@
 		42317BA72BCCCD9F006C5658 /* Diary */ = {
 			isa = PBXGroup;
 			children = (
+				4297B81C2BCCD35A009D8C3C /* Info.plist */,
 				42317BA82BCCCD9F006C5658 /* DiaryApp.swift */,
 				42317BAA2BCCCD9F006C5658 /* ContentView.swift */,
 				4297B8182BCCD268009D8C3C /* ImagePicker.swift */,
@@ -445,6 +447,8 @@
 				DEVELOPMENT_TEAM = VQLS72LDQP;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Diary/Info.plist;
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -474,6 +478,8 @@
 				DEVELOPMENT_TEAM = VQLS72LDQP;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Diary/Info.plist;
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
