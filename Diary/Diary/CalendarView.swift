@@ -35,6 +35,7 @@ struct CalendarView: View {
             DatePicker(
                 "Start Date",
                 selection: $date,
+                in: ...Date.now,
                 displayedComponents: [.date]
             )
             .datePickerStyle(.graphical)
