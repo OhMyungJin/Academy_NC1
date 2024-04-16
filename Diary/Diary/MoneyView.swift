@@ -155,12 +155,14 @@ struct MoneyView: View {
         .navigationBarTitle("지출 작성하기", displayMode: .inline)
         .navigationBarItems(trailing:
             Button("다음") {
-                self.gotoEmo.toggle()
-                for item in expenseItems {
-                    print("카테고리: \(item.category.category)")
-                    print("가격: \(item.price)")
-                    print("내용: \(item.detail)")
-                }
+            self.gotoEmo.toggle()
+            print(expenseItems)
+            print("1111111111")
+            for item in expenseItems {
+                print("카테고리: \(item.category.category)")
+                print("가격: \(item.price)")
+                print("내용: \(item.detail)")
+            }
         })
         .padding()
     }

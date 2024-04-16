@@ -10,7 +10,7 @@ import SwiftUI
 struct ImageMemoView: View {
     
     @Environment(\.managedObjectContext) private var viewContext
-    @FetchRequest(entity: ImageMemo.entity(), sortDescriptors: []) var imageMemo: FetchedResults<ImageMemo>
+    @FetchRequest(entity: DiaryDate.entity(), sortDescriptors: []) var imageMemo: FetchedResults<DiaryDate>
     
     // 날짜 받아오기
     @Binding var dateFormat: String
@@ -75,7 +75,7 @@ struct ImageMemoView: View {
     }
     
     private func addItem() {
-        let newImageMemo = ImageMemo(context: viewContext)
+        let newImageMemo = DiaryDate(context: viewContext)
         
         // UIImage를 Data로 변환
         if let uiImage = self.image {

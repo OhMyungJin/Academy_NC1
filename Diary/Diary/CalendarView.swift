@@ -106,7 +106,7 @@ struct CalendarView: View {
         let context = PersistenceController.shared.container.viewContext
         
         // CoreData에서 해당 날짜에 맞는 메모를 검색합니다.
-        let fetchRequest: NSFetchRequest<ImageMemo> = ImageMemo.fetchRequest()
+        let fetchRequest: NSFetchRequest<DiaryDate> = DiaryDate.fetchRequest()
         
         // CoreData에서 날짜에 해당하는 메모를 찾기 위한 predicate 설정
         let predicate = NSPredicate(format: "dateString == %@", date)
@@ -117,8 +117,8 @@ struct CalendarView: View {
             let result = try context.fetch(fetchRequest)
             
             // 결과가 있는 경우 메모를 반환합니다.
-            if let imageMemo = result.first {
-                return imageMemo.memo
+            if let memo = result.first {
+                return memo.memo
             } else {
                 // 결과가 없는 경우 기본 문구를 반환합니다.
                 return nil
