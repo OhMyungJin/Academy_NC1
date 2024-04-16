@@ -8,10 +8,7 @@
 import SwiftUI
 
 struct ImageMemoView: View {
-    
-    @Environment(\.managedObjectContext) private var viewContext
-    @FetchRequest(entity: DiaryDate.entity(), sortDescriptors: []) var imageMemo: FetchedResults<DiaryDate>
-    
+
     // Binding하기
     @Binding var gotoRoot: Bool
     @Binding var dateFormat: String
@@ -20,7 +17,6 @@ struct ImageMemoView: View {
     @State private var openPhoto = false
     // image, memo 전달용
     @State private var image: UIImage? = nil
-    @State private var imageData: Data = Data()
     @State private var memoString: String = ""
     
     // TextEditor에 작성될 문자열
@@ -35,6 +31,7 @@ struct ImageMemoView: View {
         VStack{
             NavigationLink(destination: MoneyView(gotoRoot: self.$gotoRoot, dateFormat: $dateFormat, imageData: self.$image, memoString: self.$memoString), isActive: self.$gotoMoney, label: {})
 //            NavigationLink(destination: CalendarView(), isActive: self.$gotoMoney, label: {})
+            
             // 일단 버튼 모양 '이미지추가'로 대체
             Button {
                 self.openPhoto = true
@@ -69,22 +66,12 @@ struct ImageMemoView: View {
         .navigationBarItems(trailing:
             Button("다음") {
             
-            if let uiImage = self.image {
-                if let data = uiImage.jpegData(compressionQuality: 1.0) {
-                    imageData = data
-                }
-            } else if let defaultImg = defaultImage,
-                      let data = defaultImg.jpegData(compressionQuality: 1.0) {
-                imageData = data
-            }
-            
             if diary.isEmpty {
                 print("머쓱")
             } else {
                 memoString = diary
                 self.gotoMoney.toggle()
             }
-//            addItem()
         })
         .padding()
         // ImagePicker 표시

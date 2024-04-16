@@ -20,7 +20,7 @@ struct CalendarView: View {
     
     var body: some View {
         VStack{
-            NavigationLink(destination: ImageMemoView(gotoRoot: self.$gotoMemo, dateFormat: self.$dateFormat).environment(\.managedObjectContext, persistenceController.container.viewContext), isActive: self.$gotoMemo, label: {})
+            NavigationLink(destination: ImageMemoView(gotoRoot: self.$gotoMemo, dateFormat: self.$dateFormat), isActive: self.$gotoMemo, label: {})
 //            MoneyView(dateFormat: $dateFormat)
             
             HStack{
@@ -107,7 +107,7 @@ struct CalendarView: View {
     func fetchMemoForDate(date: String) -> String? {
         let context = PersistenceController.shared.container.viewContext
         
-        // CoreData에서 해당 날짜에 맞는 메모를 검색합니다.
+        // CoreData에서 해당 날짜에 맞는 메모를 검색
         let fetchRequest: NSFetchRequest<DiaryDate> = DiaryDate.fetchRequest()
         
         // CoreData에서 날짜에 해당하는 메모를 찾기 위한 predicate 설정
@@ -115,14 +115,13 @@ struct CalendarView: View {
         fetchRequest.predicate = predicate
         
         do {
-            // CoreData에서 메모를 가져옵니다.
+            // CoreData에서 메모를 가져오기
             let result = try context.fetch(fetchRequest)
             
-            // 결과가 있는 경우 메모를 반환합니다.
+            // 결과가 있는 경우 메모 반환
             if let memo = result.first {
                 return memo.memo
-            } else {
-                // 결과가 없는 경우 기본 문구를 반환합니다.
+            } else { // 결과가 없는 경우
                 return nil
             }
         } catch {

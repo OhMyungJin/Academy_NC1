@@ -27,6 +27,8 @@ struct EmotionView: View {
     
     @State var gotoPre = false
     
+    let persistenceController = PersistenceController.shared
+    
     var minimumValue = 0.0
     var maximumValue = 100.0
     

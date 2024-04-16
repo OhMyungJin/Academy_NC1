@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		42179A462BCE29570085AD50 /* test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42179A452BCE29570085AD50 /* test.swift */; };
 		42179A482BCE97920085AD50 /* PreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42179A472BCE97920085AD50 /* PreviewView.swift */; };
 		42317BA92BCCCD9F006C5658 /* DiaryApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42317BA82BCCCD9F006C5658 /* DiaryApp.swift */; };
 		42317BAB2BCCCD9F006C5658 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42317BAA2BCCCD9F006C5658 /* ContentView.swift */; };
@@ -43,7 +42,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		42179A452BCE29570085AD50 /* test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = test.swift; sourceTree = "<group>"; };
 		42179A472BCE97920085AD50 /* PreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewView.swift; sourceTree = "<group>"; };
 		42317BA52BCCCD9F006C5658 /* Diary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Diary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		42317BA82BCCCD9F006C5658 /* DiaryApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryApp.swift; sourceTree = "<group>"; };
@@ -122,7 +120,6 @@
 				4297B81D2BCCD825009D8C3C /* MoneyView.swift */,
 				4297B81F2BCD4697009D8C3C /* EmotionView.swift */,
 				42179A472BCE97920085AD50 /* PreviewView.swift */,
-				42179A452BCE29570085AD50 /* test.swift */,
 				42317BAC2BCCCDA0006C5658 /* Assets.xcassets */,
 				42317BB12BCCCDA0006C5658 /* Persistence.swift */,
 				42317BB32BCCCDA0006C5658 /* Diary.xcdatamodeld */,
@@ -290,7 +287,6 @@
 				4297B8202BCD4697009D8C3C /* EmotionView.swift in Sources */,
 				42317BB22BCCCDA0006C5658 /* Persistence.swift in Sources */,
 				42179A482BCE97920085AD50 /* PreviewView.swift in Sources */,
-				42179A462BCE29570085AD50 /* test.swift in Sources */,
 				42317BAB2BCCCD9F006C5658 /* ContentView.swift in Sources */,
 				4297B81B2BCCD278009D8C3C /* IamgeMemoView.swift in Sources */,
 				4297B8192BCCD268009D8C3C /* ImagePicker.swift in Sources */,

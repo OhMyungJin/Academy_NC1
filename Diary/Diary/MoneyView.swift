@@ -38,9 +38,6 @@ struct ExpenseItem {
     var detail: String = "" // 내용
 }
 
-
-let persistenceController = PersistenceController.shared
-
 struct MoneyView: View {
     
     // Binding하기
@@ -57,7 +54,7 @@ struct MoneyView: View {
     var body: some View {
         ScrollView{
             VStack {
-                NavigationLink(destination: EmotionView(gotoRoot: self.$gotoRoot, dateFormat: $dateFormat, imageData: self.$imageData, memoString: self.$memoString, expenseItems: $expenseItems).environment(\.managedObjectContext, persistenceController.container.viewContext), isActive: self.$gotoEmo, label: {})
+                NavigationLink(destination: EmotionView(gotoRoot: self.$gotoRoot, dateFormat: $dateFormat, imageData: self.$imageData, memoString: self.$memoString, expenseItems: $expenseItems), isActive: self.$gotoEmo, label: {})
                 //            NavigationLink(destination: test().environment(\.managedObjectContext, persistenceController.container.viewContext), isActive: self.$gotoEmo, label: {})
                 
                 // 지출 항목을 그리드 형식으로 표시
@@ -165,14 +162,8 @@ struct MoneyView: View {
         }
         .navigationBarTitle("지출 작성하기", displayMode: .inline)
         .navigationBarItems(trailing:
-                                Button("다음") {
+            Button("다음") {
             self.gotoEmo.toggle()
-            print(expenseItems)
-            for item in expenseItems {
-                print("카테고리: \(item.category.category)")
-                print("가격: \(item.price)")
-                print("내용: \(item.detail)")
-            }
         })
     }
 }

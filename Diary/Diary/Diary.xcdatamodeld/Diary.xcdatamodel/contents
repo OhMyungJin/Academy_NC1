@@ -15,10 +15,6 @@
         <attribute name="sad" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="diaryDate" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DiaryDate" inverseName="emotion" inverseEntity="DiaryDate"/>
     </entity>
-    <entity name="FoodEntity" representedClassName="FoodEntity" syncable="YES" codeGenerationType="class">
-        <attribute name="mama" optional="YES" attributeType="Binary"/>
-        <attribute name="name" optional="YES" attributeType="String"/>
-    </entity>
     <entity name="Item" representedClassName="Item" syncable="YES" codeGenerationType="class">
         <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
     </entity>

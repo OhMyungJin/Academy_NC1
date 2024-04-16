@@ -46,6 +46,8 @@ struct PreviewView: View {
                 }
                 
                 if expenseItems.isEmpty {
+                    // 지출이 없습니다 나올 수 있도록 나중에 수정
+                    // 지금은 제거하기도 안되고 지출이 없을 때 어떻게 해야하는지 아이디어 찾아야함
                     Text("지출이 없습니다.")
                 } else {
                     HStack{
@@ -105,6 +107,7 @@ struct PreviewView: View {
         })
     }
     
+    // CoreData 추가
     private func addItem() {
         let newDiary = DiaryDate(context: viewContext)
         
@@ -133,6 +136,7 @@ struct PreviewView: View {
         saveItems()
     }
     
+    // CoreData 저장
     private func saveItems() {
         do {
             try viewContext.save()
