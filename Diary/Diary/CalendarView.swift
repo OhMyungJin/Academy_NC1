@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct CalendarView: View {
     
@@ -19,7 +20,7 @@ struct CalendarView: View {
     
     var body: some View {
         VStack{
-            NavigationLink(destination: ImageMemoView(dateFormat: self.$dateFormat), isActive: self.$gotoMemo, label: {})
+            NavigationLink(destination: ImageMemoView(dateFormat: self.$dateFormat).environment(\.managedObjectContext, persistenceController.container.viewContext), isActive: self.$gotoMemo, label: {})
             HStack{
                 Spacer()
                 // 내 정보로 가는 버튼
@@ -56,27 +57,77 @@ struct CalendarView: View {
                 Spacer()
             }
             
-            // 작성된 일기가 없을 때 보이는 창
-            Text("작성된 일기가 없습니다.")
-                .frame(maxWidth: .infinity,
-                       maxHeight: .infinity)
-            
-            // 기록하기로 가는 버튼
-            Button {
-                print("기록하기")
-                self.gotoMemo.toggle()
-            } label: {
-                Text("기록하기")
-                    .frame(maxWidth: .infinity)
-                    .frame(height: 40)
-                    .font(.system(size:16, weight: .medium))
-                    .foregroundColor(.black)
-                    .background(
-                        RoundedRectangle(cornerRadius: 10)
-                            .fill(Color.gray))
+            VStack{
+                if let memo = fetchMemoForDate(date: dateFormat) {
+                    // 메모가 있을 경우 표시
+                    Text(memo)
+                        .frame(maxWidth: .infinity,
+                               maxHeight: .infinity)
+                    // 돌아보기로 가는 버튼
+                    Button {
+                        print("돌아보기")
+                        self.gotoMemo.toggle()
+                    } label: {
+                        Text("돌아보기")
+                            .frame(maxWidth: .infinity)
+                            .frame(height: 40)
+                            .font(.system(size:16, weight: .medium))
+                            .foregroundColor(.black)
+                            .background(
+                                RoundedRectangle(cornerRadius: 10)
+                                    .fill(Color.blue))
+                    }
+                } else {
+                    // 메모가 없을 경우 기본 문구 표시
+                    Text("작성된 일기가 없습니다.")
+                        .frame(maxWidth: .infinity,
+                               maxHeight: .infinity)
+                    // 기록하기로 가는 버튼
+                    Button {
+                        print("기록하기")
+                        self.gotoMemo.toggle()
+                    } label: {
+                        Text("기록하기")
+                            .frame(maxWidth: .infinity)
+                            .frame(height: 40)
+                            .font(.system(size:16, weight: .medium))
+                            .foregroundColor(.black)
+                            .background(
+                                RoundedRectangle(cornerRadius: 10)
+                                    .fill(Color.gray))
+                    }
+                }
             }
         }
         .padding()
+    }
+    
+    func fetchMemoForDate(date: String) -> String? {
+        let context = PersistenceController.shared.container.viewContext
+        
+        // CoreData에서 해당 날짜에 맞는 메모를 검색합니다.
+        let fetchRequest: NSFetchRequest<ImageMemo> = ImageMemo.fetchRequest()
+        
+        // CoreData에서 날짜에 해당하는 메모를 찾기 위한 predicate 설정
+        let predicate = NSPredicate(format: "dateString == %@", date)
+        fetchRequest.predicate = predicate
+        
+        do {
+            // CoreData에서 메모를 가져옵니다.
+            let result = try context.fetch(fetchRequest)
+            
+            // 결과가 있는 경우 메모를 반환합니다.
+            if let imageMemo = result.first {
+                return imageMemo.memo
+            } else {
+                // 결과가 없는 경우 기본 문구를 반환합니다.
+                return nil
+            }
+        } catch {
+            // 에러 발생 시 처리
+            print("Error fetching memo for date: \(error.localizedDescription)")
+            return nil
+        }
     }
 }
 

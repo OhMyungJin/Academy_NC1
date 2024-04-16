@@ -38,16 +38,20 @@ struct ExpenseItem {
     var detail: String = "" // 내용
 }
 
+
+let persistenceController = PersistenceController.shared
+
 struct MoneyView: View {
     
     // expenseItems 초기화, category 값을 '.고정비'로 지정
     @State private var expenseItems: [ExpenseItem] = [ExpenseItem(category: .고정비)]
     
     @State var gotoEmo = false
-
+    
     var body: some View {
         VStack {
-            NavigationLink(destination: EmotionView(), isActive: self.$gotoEmo, label: {})
+            //            NavigationLink(destination: EmotionView(), isActive: self.$gotoEmo, label: {})
+            NavigationLink(destination: test().environment(\.managedObjectContext, persistenceController.container.viewContext), isActive: self.$gotoEmo, label: {})
             
             // 지출 항목을 그리드 형식으로 표시
             LazyVGrid(columns: [GridItem(.flexible())]) {
@@ -110,10 +114,11 @@ struct MoneyView: View {
                     .frame(height: 244)
                     .background(
                         RoundedRectangle(cornerRadius: 10)
-                        .fill(.gray))
+                            .fill(.gray))
+                    
                 }
             }
-
+            
             HStack {
                 // 마지막 지출 항목 제거
                 Button {
@@ -144,13 +149,18 @@ struct MoneyView: View {
                                 .fill(Color.gray))
                 }
             }
-
+            
             Spacer()
         }
         .navigationBarTitle("지출 작성하기", displayMode: .inline)
         .navigationBarItems(trailing:
             Button("다음") {
-            self.gotoEmo.toggle()
+                self.gotoEmo.toggle()
+                for item in expenseItems {
+                    print("카테고리: \(item.category.category)")
+                    print("가격: \(item.price)")
+                    print("내용: \(item.detail)")
+                }
         })
         .padding()
     }
