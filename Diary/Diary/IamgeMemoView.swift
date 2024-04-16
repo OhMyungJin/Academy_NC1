@@ -12,12 +12,17 @@ struct ImageMemoView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @FetchRequest(entity: DiaryDate.entity(), sortDescriptors: []) var imageMemo: FetchedResults<DiaryDate>
     
-    // 날짜 받아오기
+    // Binding하기
+    @Binding var gotoRoot: Bool
     @Binding var dateFormat: String
     
     // ImagePicker boolean값
     @State private var openPhoto = false
+    // image, memo 전달용
     @State private var image: UIImage? = nil
+    @State private var imageData: Data = Data()
+    @State private var memoString: String = ""
+    
     // TextEditor에 작성될 문자열
     @State var diary: String = ""
     @State var gotoMoney = false
@@ -28,7 +33,7 @@ struct ImageMemoView: View {
     
     var body: some View {
         VStack{
-            NavigationLink(destination: MoneyView(), isActive: self.$gotoMoney, label: {})
+            NavigationLink(destination: MoneyView(gotoRoot: self.$gotoRoot, dateFormat: $dateFormat, imageData: self.$image, memoString: self.$memoString), isActive: self.$gotoMoney, label: {})
 //            NavigationLink(destination: CalendarView(), isActive: self.$gotoMoney, label: {})
             // 일단 버튼 모양 '이미지추가'로 대체
             Button {
@@ -63,9 +68,23 @@ struct ImageMemoView: View {
         .navigationBarTitle("일기 작성하기", displayMode: .inline)
         .navigationBarItems(trailing:
             Button("다음") {
-            addItem()
-            self.gotoMoney.toggle()
             
+            if let uiImage = self.image {
+                if let data = uiImage.jpegData(compressionQuality: 1.0) {
+                    imageData = data
+                }
+            } else if let defaultImg = defaultImage,
+                      let data = defaultImg.jpegData(compressionQuality: 1.0) {
+                imageData = data
+            }
+            
+            if diary.isEmpty {
+                print("머쓱")
+            } else {
+                memoString = diary
+                self.gotoMoney.toggle()
+            }
+//            addItem()
         })
         .padding()
         // ImagePicker 표시
@@ -73,41 +92,9 @@ struct ImageMemoView: View {
             ImagePicker(selectedImage: self.$image, sourceType: .photoLibrary)
         }
     }
-    
-    private func addItem() {
-        let newImageMemo = DiaryDate(context: viewContext)
-        
-        // UIImage를 Data로 변환
-        if let uiImage = self.image {
-            if let imageData = uiImage.jpegData(compressionQuality: 1.0) {
-                newImageMemo.image = imageData
-            }
-        } else if let defaultImg = defaultImage, let imageData = defaultImg.jpegData(compressionQuality: 1.0) {
-            newImageMemo.image = imageData
-        }
-    
-//        newImageMemo.image = Image(uiImage: self.image ?? defaultImage!)
-        newImageMemo.memo = diary
-        newImageMemo.dateString = dateFormat
-        
-        diary = ""
-        
-        saveItems()
-    }
-    
-    private func saveItems() {
-        do {
-            try viewContext.save()
-        } catch {
-            // Replace this implementation with code to handle the error appropriately.
-            // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            let nsError = error as NSError
-            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-        }
-    }
 }
 
 
 #Preview {
-    ImageMemoView(dateFormat: Binding.constant("Preview date")).environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+    ImageMemoView(gotoRoot: Binding.constant(false), dateFormat: Binding.constant("Preview date")).environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
 }

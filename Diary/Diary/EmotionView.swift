@@ -9,6 +9,15 @@ import SwiftUI
 
 struct EmotionView: View {
     
+    // Binding하기
+    @Binding var gotoRoot: Bool
+    @Binding var dateFormat: String
+    @Binding var imageData: UIImage?
+    @Binding var memoString: String
+    @Binding var expenseItems: [ExpenseItem]
+    
+    @State private var emotions: Array<Int16> = []
+    
     // 각 감정의 수치
     @State private var sliderValue1 = 0.0
     @State private var sliderValue2 = 0.0
@@ -16,11 +25,15 @@ struct EmotionView: View {
     @State private var sliderValue4 = 0.0
     @State private var sliderValue5 = 0.0
     
+    @State var gotoPre = false
+    
     var minimumValue = 0.0
     var maximumValue = 100.0
     
     var body: some View {
         VStack{
+            NavigationLink(destination: PreviewView(gotoRoot: self.$gotoRoot, dateFormat: $dateFormat, imageData: self.$imageData, memoString: self.$memoString, expenseItems: $expenseItems, emotions: $emotions).environment(\.managedObjectContext, persistenceController.container.viewContext), isActive: self.$gotoPre, label: {})
+            
             Spacer()
             
             Text("하루의 감정을 수치로 나타내보세요!")
@@ -89,14 +102,15 @@ struct EmotionView: View {
             
             Spacer()
         }
-        .navigationBarTitle("지출 작성하기", displayMode: .inline)
+        .navigationBarTitle("감정 기록하기", displayMode: .inline)
         .navigationBarItems(trailing:
-            Button("완료") {
-                print("완료")
+            Button("다음") {
+            emotions = [Int16(sliderValue1), Int16(sliderValue2), Int16(sliderValue3), Int16(sliderValue4), Int16(sliderValue5)]
+            self.gotoPre.toggle()
         })
     }
 }
 
 #Preview {
-    EmotionView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+    EmotionView(gotoRoot: Binding.constant(false), dateFormat: Binding.constant("Preview date"), imageData: Binding.constant(nil), memoString: Binding.constant("Preview date"), expenseItems: Binding.constant([])).environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
 }

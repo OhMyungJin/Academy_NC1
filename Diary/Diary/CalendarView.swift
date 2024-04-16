@@ -16,11 +16,13 @@ struct CalendarView: View {
     @State private var dateFormat: String = ""
     
     // 화면 전환 여부
-    @State var gotoMemo = false
+    @State private var gotoMemo: Bool = false
     
     var body: some View {
         VStack{
-            NavigationLink(destination: ImageMemoView(dateFormat: self.$dateFormat).environment(\.managedObjectContext, persistenceController.container.viewContext), isActive: self.$gotoMemo, label: {})
+            NavigationLink(destination: ImageMemoView(gotoRoot: self.$gotoMemo, dateFormat: self.$dateFormat).environment(\.managedObjectContext, persistenceController.container.viewContext), isActive: self.$gotoMemo, label: {})
+//            MoneyView(dateFormat: $dateFormat)
+            
             HStack{
                 Spacer()
                 // 내 정보로 가는 버튼

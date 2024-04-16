@@ -43,132 +43,141 @@ let persistenceController = PersistenceController.shared
 
 struct MoneyView: View {
     
+    // Binding하기
+    @Binding var gotoRoot: Bool
+    @Binding var dateFormat: String
+    @Binding var imageData: UIImage?
+    @Binding var memoString: String
+    
     // expenseItems 초기화, category 값을 '.고정비'로 지정
     @State private var expenseItems: [ExpenseItem] = [ExpenseItem(category: .고정비)]
     
     @State var gotoEmo = false
     
     var body: some View {
-        VStack {
-            //            NavigationLink(destination: EmotionView(), isActive: self.$gotoEmo, label: {})
-            NavigationLink(destination: test().environment(\.managedObjectContext, persistenceController.container.viewContext), isActive: self.$gotoEmo, label: {})
-            
-            // 지출 항목을 그리드 형식으로 표시
-            LazyVGrid(columns: [GridItem(.flexible())]) {
-                // 항목 개수만큼 반복
-                ForEach($expenseItems, id: \.id) { $item in
-                    VStack {
-                        HStack {
-                            Text("분류")
-                                .frame(height: 40)
-                                .padding(.leading, 20)
-                                .padding(.top, 8)
-                            // Picker를 사용하여 분류 선택
-                            Picker(
-                                "category",
-                                selection: $item.category
-                            ){
-                                ForEach(Category.allCases) { category in
-                                    Text(category.rawValue.capitalized)
+        ScrollView{
+            VStack {
+                NavigationLink(destination: EmotionView(gotoRoot: self.$gotoRoot, dateFormat: $dateFormat, imageData: self.$imageData, memoString: self.$memoString, expenseItems: $expenseItems).environment(\.managedObjectContext, persistenceController.container.viewContext), isActive: self.$gotoEmo, label: {})
+                //            NavigationLink(destination: test().environment(\.managedObjectContext, persistenceController.container.viewContext), isActive: self.$gotoEmo, label: {})
+                
+                // 지출 항목을 그리드 형식으로 표시
+                LazyVGrid(columns: [GridItem(.flexible())]) {
+                    // 항목 개수만큼 반복
+                    ForEach($expenseItems, id: \.id) { $item in
+                        VStack {
+                            HStack {
+                                Text("분류")
+                                    .frame(height: 40)
+                                    .padding(.leading, 20)
+                                    .padding(.top, 8)
+                                // Picker를 사용하여 분류 선택
+                                Picker(
+                                    "category",
+                                    selection: $item.category
+                                ){
+                                    ForEach(Category.allCases) { category in
+                                        Text(category.rawValue.capitalized)
+                                    }
                                 }
-                            }
-                            .pickerStyle(.automatic)
-                            .frame(maxWidth: .infinity)
-                            .frame(height: 40)
-                            .background(RoundedRectangle(cornerRadius: 10)
-                                .fill(.white))
-                            .padding(.init(top: 16, leading: 16, bottom: 8, trailing: 16))
-                        }
-                        
-                        // 가격 입력
-                        HStack {
-                            Text("가격")
-                                .frame(height: 40)
-                                .padding(.leading, 20)
-                            TextField("", text: $item.price)
+                                .pickerStyle(.automatic)
                                 .frame(maxWidth: .infinity)
                                 .frame(height: 40)
                                 .background(RoundedRectangle(cornerRadius: 10)
                                     .fill(.white))
-                                .padding(.leading, 16)
-                                .padding(.trailing, 16)
-                        }
-                        
-                        // 내용 입력
-                        HStack {
-                            VStack {
-                                Text("내용")
-                                    .padding(.leading, 20)
-                                    .padding(.top, 24)
-                                Spacer()
+                                .padding(.init(top: 16, leading: 16, bottom: 8, trailing: 16))
                             }
-                            TextEditor(text: $item.detail)
-                                .frame(maxWidth: .infinity)
-                                .frame(height: 90)
-                                .cornerRadius(10)
-                                .padding(.init(top: 8, leading: 16, bottom: 16, trailing: 16))
+                            
+                            // 가격 입력
+                            HStack {
+                                Text("가격")
+                                    .frame(height: 40)
+                                    .padding(.leading, 20)
+//                                TextField("", value: $item.price, formatter: NumberFormatter())
+                                TextField("", text: $item.price)
+                                    .frame(maxWidth: .infinity)
+                                    .frame(height: 40)
+                                    .background(RoundedRectangle(cornerRadius: 10)
+                                        .fill(.white))
+                                    .padding(.leading, 16)
+                                    .padding(.trailing, 16)
+                            }
+                            
+                            // 내용 입력
+                            HStack {
+                                VStack {
+                                    Text("내용")
+                                        .padding(.leading, 20)
+                                        .padding(.top, 24)
+                                    Spacer()
+                                }
+                                TextEditor(text: $item.detail)
+                                    .frame(maxWidth: .infinity)
+                                    .frame(height: 90)
+                                    .cornerRadius(10)
+                                    .padding(.init(top: 8, leading: 16, bottom: 16, trailing: 16))
+                            }
+                            
                         }
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 244)
+                        .background(
+                            RoundedRectangle(cornerRadius: 10)
+                                .fill(.gray))
                         
                     }
-                    .frame(maxWidth: .infinity)
-                    .frame(height: 244)
-                    .background(
-                        RoundedRectangle(cornerRadius: 10)
-                            .fill(.gray))
-                    
                 }
-            }
-            
-            HStack {
-                // 마지막 지출 항목 제거
-                Button {
-                    if expenseItems.count > 1 {
-                        expenseItems.removeLast()
+                
+                HStack {
+                    // 마지막 지출 항목 제거
+                    Button {
+                        if expenseItems.count > 1 {
+                            expenseItems.removeLast()
+                        }
+                    } label: {
+                        Text("제거하기")
+                            .frame(width: 147)
+                            .frame(height: 40)
+                            .font(.system(size:16, weight: .medium))
+                            .foregroundColor(.black)
+                            .background(
+                                RoundedRectangle(cornerRadius: 10)
+                                    .fill(Color.gray))
                     }
-                } label: {
-                    Text("제거하기")
-                        .frame(width: 147)
-                        .frame(height: 40)
-                        .font(.system(size:16, weight: .medium))
-                        .foregroundColor(.black)
-                        .background(
-                            RoundedRectangle(cornerRadius: 10)
-                                .fill(Color.gray))
+                    // 새 지출 항목 추가
+                    Button {
+                        print(dateFormat)
+                        expenseItems.append(ExpenseItem(category: .고정비))
+                    } label: {
+                        Text("추가하기")
+                            .frame(width: 147)
+                            .frame(height: 40)
+                            .font(.system(size:16, weight: .medium))
+                            .foregroundColor(.black)
+                            .background(
+                                RoundedRectangle(cornerRadius: 10)
+                                    .fill(Color.gray))
+                    }
                 }
-                // 새 지출 항목 추가
-                Button {
-                    expenseItems.append(ExpenseItem(category: .고정비))
-                } label: {
-                    Text("추가하기")
-                        .frame(width: 147)
-                        .frame(height: 40)
-                        .font(.system(size:16, weight: .medium))
-                        .foregroundColor(.black)
-                        .background(
-                            RoundedRectangle(cornerRadius: 10)
-                                .fill(Color.gray))
-                }
+                
+                Spacer()
             }
-            
-            Spacer()
+            .padding()
         }
         .navigationBarTitle("지출 작성하기", displayMode: .inline)
         .navigationBarItems(trailing:
-            Button("다음") {
+                                Button("다음") {
             self.gotoEmo.toggle()
             print(expenseItems)
-            print("1111111111")
             for item in expenseItems {
                 print("카테고리: \(item.category.category)")
                 print("가격: \(item.price)")
                 print("내용: \(item.detail)")
             }
         })
-        .padding()
     }
 }
 
 
 #Preview {
-    MoneyView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+    MoneyView(gotoRoot: Binding.constant(false), dateFormat: Binding.constant("Preview date"), imageData: Binding.constant(nil), memoString: Binding.constant("Preview date")).environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
 }
