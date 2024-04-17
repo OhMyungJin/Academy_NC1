@@ -19,9 +19,10 @@
 		42317BCB2BCCCDA0006C5658 /* DiaryUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42317BCA2BCCCDA0006C5658 /* DiaryUITestsLaunchTests.swift */; };
 		4297B8172BCCD257009D8C3C /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4297B8162BCCD257009D8C3C /* CalendarView.swift */; };
 		4297B8192BCCD268009D8C3C /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4297B8182BCCD268009D8C3C /* ImagePicker.swift */; };
-		4297B81B2BCCD278009D8C3C /* IamgeMemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4297B81A2BCCD278009D8C3C /* IamgeMemoView.swift */; };
+		4297B81B2BCCD278009D8C3C /* ImageMemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4297B81A2BCCD278009D8C3C /* ImageMemoView.swift */; };
 		4297B81E2BCCD825009D8C3C /* MoneyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4297B81D2BCCD825009D8C3C /* MoneyView.swift */; };
 		4297B8202BCD4697009D8C3C /* EmotionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4297B81F2BCD4697009D8C3C /* EmotionView.swift */; };
+		429850272BCF57250037E49E /* LookBackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 429850262BCF57250037E49E /* LookBackView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,10 +58,11 @@
 		42317BCA2BCCCDA0006C5658 /* DiaryUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		4297B8162BCCD257009D8C3C /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		4297B8182BCCD268009D8C3C /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
-		4297B81A2BCCD278009D8C3C /* IamgeMemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IamgeMemoView.swift; sourceTree = "<group>"; };
+		4297B81A2BCCD278009D8C3C /* ImageMemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageMemoView.swift; sourceTree = "<group>"; };
 		4297B81C2BCCD35A009D8C3C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		4297B81D2BCCD825009D8C3C /* MoneyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyView.swift; sourceTree = "<group>"; };
 		4297B81F2BCD4697009D8C3C /* EmotionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmotionView.swift; sourceTree = "<group>"; };
+		429850262BCF57250037E49E /* LookBackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LookBackView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,10 +118,11 @@
 				42317BAA2BCCCD9F006C5658 /* ContentView.swift */,
 				4297B8182BCCD268009D8C3C /* ImagePicker.swift */,
 				4297B8162BCCD257009D8C3C /* CalendarView.swift */,
-				4297B81A2BCCD278009D8C3C /* IamgeMemoView.swift */,
+				4297B81A2BCCD278009D8C3C /* ImageMemoView.swift */,
 				4297B81D2BCCD825009D8C3C /* MoneyView.swift */,
 				4297B81F2BCD4697009D8C3C /* EmotionView.swift */,
 				42179A472BCE97920085AD50 /* PreviewView.swift */,
+				429850262BCF57250037E49E /* LookBackView.swift */,
 				42317BAC2BCCCDA0006C5658 /* Assets.xcassets */,
 				42317BB12BCCCDA0006C5658 /* Persistence.swift */,
 				42317BB32BCCCDA0006C5658 /* Diary.xcdatamodeld */,
@@ -288,10 +291,11 @@
 				42317BB22BCCCDA0006C5658 /* Persistence.swift in Sources */,
 				42179A482BCE97920085AD50 /* PreviewView.swift in Sources */,
 				42317BAB2BCCCD9F006C5658 /* ContentView.swift in Sources */,
-				4297B81B2BCCD278009D8C3C /* IamgeMemoView.swift in Sources */,
+				4297B81B2BCCD278009D8C3C /* ImageMemoView.swift in Sources */,
 				4297B8192BCCD268009D8C3C /* ImagePicker.swift in Sources */,
 				4297B81E2BCCD825009D8C3C /* MoneyView.swift in Sources */,
 				42317BA92BCCCD9F006C5658 /* DiaryApp.swift in Sources */,
+				429850272BCF57250037E49E /* LookBackView.swift in Sources */,
 				42317BB52BCCCDA0006C5658 /* Diary.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

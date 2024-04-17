@@ -11,6 +11,8 @@ struct PreviewView: View {
     
     @Environment(\.managedObjectContext) private var viewContext
     @FetchRequest(entity: DiaryDate.entity(), sortDescriptors: []) var imageMemo: FetchedResults<DiaryDate>
+    @FetchRequest(entity: Money.entity(), sortDescriptors: []) var money: FetchedResults<Money>
+    @FetchRequest(entity: Emotions.entity(), sortDescriptors: []) var emotion: FetchedResults<Emotions>
     
     // Binding하기
     @Binding var gotoRoot: Bool
@@ -118,20 +120,24 @@ struct PreviewView: View {
             }
         }
         
-        newDiary.memo = memoString
         newDiary.dateString = dateFormat
+        newDiary.memo = memoString
         
         for item in expenseItems {
-            newDiary.money?.category = item.category.category
-            newDiary.money?.price = item.price
-            newDiary.money?.detail = item.detail
+            let newMoney = Money(context: viewContext)
+            newMoney.dateString = dateFormat
+            newMoney.category = item.category.category
+            newMoney.price = item.price
+            newMoney.detail = item.detail
         }
         
-        newDiary.emotion?.happy = emotions[0]
-        newDiary.emotion?.sad = emotions[1]
-        newDiary.emotion?.angry = emotions[2]
-        newDiary.emotion?.panic = emotions[3]
-        newDiary.emotion?.anxiety = emotions[4]
+        let newFeels = Emotions(context: viewContext)
+        newFeels.dateString = dateFormat
+        newFeels.happy = emotions[0]
+        newFeels.sad = emotions[1]
+        newFeels.angry = emotions[2]
+        newFeels.panic = emotions[3]
+        newFeels.anxiety = emotions[4]
         
         saveItems()
     }

@@ -10,6 +10,7 @@
     <entity name="Emotions" representedClassName="Emotions" syncable="YES" codeGenerationType="class">
         <attribute name="angry" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="anxiety" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="dateString" optional="YES" attributeType="String"/>
         <attribute name="happy" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="panic" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="sad" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
@@ -20,6 +21,7 @@
     </entity>
     <entity name="Money" representedClassName="Money" syncable="YES" codeGenerationType="class">
         <attribute name="category" optional="YES" attributeType="String"/>
+        <attribute name="dateString" optional="YES" attributeType="String"/>
         <attribute name="detail" optional="YES" attributeType="String"/>
         <attribute name="price" optional="YES" attributeType="String"/>
         <relationship name="diaryDate" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DiaryDate" inverseName="money" inverseEntity="DiaryDate"/>

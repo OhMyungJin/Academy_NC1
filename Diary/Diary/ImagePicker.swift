@@ -26,6 +26,8 @@ struct ImagePicker: UIViewControllerRepresentable {
         _selectedImage = selectedImage
         self.sourceType = sourceType
         self.defaultImage = defaultImage
+        print(selectedImage)
+        print("1")
     }
     
     // UIViewControllerRepresentable 프로토콜에서 요구되는 메서드

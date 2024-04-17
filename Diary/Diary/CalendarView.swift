@@ -17,10 +17,14 @@ struct CalendarView: View {
     
     // 화면 전환 여부
     @State private var gotoMemo: Bool = false
+    @State private var gotoBack: Bool = false
+    
+    let persistenceController = PersistenceController.shared
     
     var body: some View {
         VStack{
             NavigationLink(destination: ImageMemoView(gotoRoot: self.$gotoMemo, dateFormat: self.$dateFormat), isActive: self.$gotoMemo, label: {})
+            NavigationLink(destination: LookBackView(dateFormat: self.$dateFormat).environment(\.managedObjectContext, persistenceController.container.viewContext), isActive: self.$gotoBack, label: {})
 //            MoneyView(dateFormat: $dateFormat)
             
             HStack{
@@ -68,7 +72,7 @@ struct CalendarView: View {
                     // 돌아보기로 가는 버튼
                     Button {
                         print("돌아보기")
-                        self.gotoMemo.toggle()
+                        self.gotoBack.toggle()
                     } label: {
                         Text("돌아보기")
                             .frame(maxWidth: .infinity)
