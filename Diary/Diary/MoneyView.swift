@@ -54,7 +54,7 @@ struct MoneyView: View {
     var body: some View {
         ScrollView{
             VStack {
-                NavigationLink(destination: EmotionView(gotoRoot: self.$gotoRoot, dateFormat: $dateFormat, imageData: self.$imageData, memoString: self.$memoString, expenseItems: $expenseItems), isActive: self.$gotoEmo, label: {})
+                NavigationLink(destination: EmotionView(gotoRoot: self.$gotoRoot, dateFormat: $dateFormat, imageData: $imageData, memoString: $memoString, expenseItems: $expenseItems), isActive: self.$gotoEmo, label: {})
                 //            NavigationLink(destination: test().environment(\.managedObjectContext, persistenceController.container.viewContext), isActive: self.$gotoEmo, label: {})
                 
                 // 지출 항목을 그리드 형식으로 표시

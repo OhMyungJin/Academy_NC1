@@ -18,11 +18,16 @@ struct LookBackView: View {
     @State private var money: [Money] = []
     @State private var feels: [Emotions] = []
     
+    @State private var gotoMemoModi: Bool = false
+    
     @State var isAppear = false
+    
+    let persistenceController = PersistenceController.shared
     
     var body: some View {
         ScrollView{
             VStack{
+                NavigationLink(destination: ImageMemoModifyView(dateFormat: $dateFormat, diary: $diary).environment(\.managedObjectContext, persistenceController.container.viewContext), isActive: self.$gotoMemoModi, label: {})
                 
                 if let image = diary.first?.image,
                    let uiImage = UIImage(data: image){
@@ -37,7 +42,8 @@ struct LookBackView: View {
                     Spacer()
                     if isAppear {
                         Button {
-                            print("dd")
+                            self.gotoMemoModi.toggle()
+                                
                         } label: {
                             Image(systemName: "pencil")
                         }
@@ -128,16 +134,16 @@ struct LookBackView: View {
                     Text("\(feels.first?.anxiety ?? 0)%")
                     Spacer()
                 }
-                .onAppear {
-                    loadDiaryData()
-                    loadMoneyData()
-                    loadFeelsData()
-                }
-                .onChange(of: dateFormat) { _ in
-                    loadDiaryData()
-                    loadMoneyData()
-                    loadFeelsData()
-                }
+            }
+            .onAppear {
+                loadDiaryData()
+                loadMoneyData()
+                loadFeelsData()
+            }
+            .onChange(of: dateFormat) { _ in
+                loadDiaryData()
+                loadMoneyData()
+                loadFeelsData()
             }
             .padding()
         }

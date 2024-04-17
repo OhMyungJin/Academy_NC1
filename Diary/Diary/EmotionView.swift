@@ -34,7 +34,7 @@ struct EmotionView: View {
     
     var body: some View {
         VStack{
-            NavigationLink(destination: PreviewView(gotoRoot: self.$gotoRoot, dateFormat: $dateFormat, imageData: self.$imageData, memoString: self.$memoString, expenseItems: $expenseItems, emotions: $emotions).environment(\.managedObjectContext, persistenceController.container.viewContext), isActive: self.$gotoPre, label: {})
+            NavigationLink(destination: PreviewView(gotoRoot: self.$gotoRoot, dateFormat: $dateFormat, imageData: $imageData, memoString: $memoString, expenseItems: $expenseItems, emotions: $emotions).environment(\.managedObjectContext, persistenceController.container.viewContext), isActive: self.$gotoPre, label: {})
             
             Spacer()
             

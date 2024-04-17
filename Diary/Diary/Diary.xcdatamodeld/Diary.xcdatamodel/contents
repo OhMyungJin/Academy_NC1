@@ -4,8 +4,6 @@
         <attribute name="dateString" optional="YES" attributeType="String"/>
         <attribute name="image" optional="YES" attributeType="Binary"/>
         <attribute name="memo" optional="YES" attributeType="String"/>
-        <relationship name="emotion" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Emotions" inverseName="diaryDate" inverseEntity="Emotions"/>
-        <relationship name="money" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Money" inverseName="diaryDate" inverseEntity="Money"/>
     </entity>
     <entity name="Emotions" representedClassName="Emotions" syncable="YES" codeGenerationType="class">
         <attribute name="angry" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
@@ -14,7 +12,6 @@
         <attribute name="happy" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="panic" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="sad" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <relationship name="diaryDate" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DiaryDate" inverseName="emotion" inverseEntity="DiaryDate"/>
     </entity>
     <entity name="Item" representedClassName="Item" syncable="YES" codeGenerationType="class">
         <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
@@ -24,6 +21,5 @@
         <attribute name="dateString" optional="YES" attributeType="String"/>
         <attribute name="detail" optional="YES" attributeType="String"/>
         <attribute name="price" optional="YES" attributeType="String"/>
-        <relationship name="diaryDate" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DiaryDate" inverseName="money" inverseEntity="DiaryDate"/>
     </entity>
 </model>

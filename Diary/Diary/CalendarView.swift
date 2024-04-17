@@ -23,7 +23,7 @@ struct CalendarView: View {
     
     var body: some View {
         VStack{
-            NavigationLink(destination: ImageMemoView(gotoRoot: self.$gotoMemo, dateFormat: self.$dateFormat), isActive: self.$gotoMemo, label: {})
+            NavigationLink(destination: ImageMemoView(gotoRoot: self.$gotoMemo, dateFormat: $dateFormat), isActive: self.$gotoMemo, label: {})
             NavigationLink(destination: LookBackView(dateFormat: self.$dateFormat).environment(\.managedObjectContext, persistenceController.container.viewContext), isActive: self.$gotoBack, label: {})
 //            MoneyView(dateFormat: $dateFormat)
             

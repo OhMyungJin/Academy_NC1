@@ -29,7 +29,7 @@ struct ImageMemoView: View {
     
     var body: some View {
         VStack{
-            NavigationLink(destination: MoneyView(gotoRoot: self.$gotoRoot, dateFormat: $dateFormat, imageData: self.$image, memoString: self.$memoString), isActive: self.$gotoMoney, label: {})
+            NavigationLink(destination: MoneyView(gotoRoot: self.$gotoRoot, dateFormat: $dateFormat, imageData: $image, memoString: $memoString), isActive: self.$gotoMoney, label: {})
 //            NavigationLink(destination: CalendarView(), isActive: self.$gotoMoney, label: {})
             
             // 일단 버튼 모양 '이미지추가'로 대체
