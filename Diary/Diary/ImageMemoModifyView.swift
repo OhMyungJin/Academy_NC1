@@ -83,20 +83,19 @@ struct ImageMemoModifyView: View {
 
         do {
             let results = try viewContext.fetch(fetchRequest)
-            if let diaryDate = results.first {
-                // 이미지와 메모 업데이트
-                if let newImage = image {
-                    diaryDate.image = newImage.jpegData(compressionQuality: 1.0)
+            if let existingDiary = results.first {
+                // 해당 엔터티의 값을 업데이트합니다.
+                if let uiImage = image {
+                    if let imageData = uiImage.jpegData(compressionQuality: 1.0) {
+                        existingDiary.image = imageData
+                    }
                 }
-                diaryDate.memo = text
-
-                // 변경 사항 저장
-                try viewContext.save()
-                dismiss() // 성공적으로 업데이트 후 화면 전환
-                
-            } else {
-                print("DiaryDate 엔티티를 찾을 수 없습니다.")
+                existingDiary.memo = text
             }
+
+            // 변경 사항 저장
+            try viewContext.save()
+            dismiss() // 성공적으로 업데이트 후 화면 전환
         } catch {
             print("Error updating item: \(error.localizedDescription)")
         }

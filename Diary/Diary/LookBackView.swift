@@ -19,6 +19,8 @@ struct LookBackView: View {
     @State private var feels: [Emotions] = []
     
     @State private var gotoMemoModi: Bool = false
+    @State private var gotoMoneyModi: Bool = false
+    @State private var gotoEmoModi: Bool = false
     
     @State var isAppear = false
     
@@ -28,6 +30,8 @@ struct LookBackView: View {
         ScrollView{
             VStack{
                 NavigationLink(destination: ImageMemoModifyView(dateFormat: $dateFormat, diary: $diary).environment(\.managedObjectContext, persistenceController.container.viewContext), isActive: self.$gotoMemoModi, label: {})
+                NavigationLink(destination: MoneyModifyView(dateFormat: $dateFormat, money: $money).environment(\.managedObjectContext, persistenceController.container.viewContext), isActive: self.$gotoMoneyModi, label: {})
+                
                 
                 if let image = diary.first?.image,
                    let uiImage = UIImage(data: image){
@@ -67,7 +71,7 @@ struct LookBackView: View {
                     Spacer()
                     if isAppear {
                         Button {
-                            print("dd")
+                            self.gotoMoneyModi.toggle()
                         } label: {
                             Image(systemName: "pencil")
                         }
@@ -180,6 +184,7 @@ struct LookBackView: View {
 
         do {
             money = try viewContext.fetch(fetchRequest)
+            print(money)
         } catch {
             print("Error fetching memos: \(error.localizedDescription)")
             money = []
