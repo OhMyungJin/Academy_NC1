@@ -31,6 +31,7 @@ struct LookBackView: View {
             VStack{
                 NavigationLink(destination: ImageMemoModifyView(dateFormat: $dateFormat, diary: $diary).environment(\.managedObjectContext, persistenceController.container.viewContext), isActive: self.$gotoMemoModi, label: {})
                 NavigationLink(destination: MoneyModifyView(dateFormat: $dateFormat, money: $money).environment(\.managedObjectContext, persistenceController.container.viewContext), isActive: self.$gotoMoneyModi, label: {})
+                NavigationLink(destination: EmotionModifyView(dateFormat: $dateFormat, feels: $feels).environment(\.managedObjectContext, persistenceController.container.viewContext), isActive: self.$gotoEmoModi, label: {})
                 
                 
                 if let image = diary.first?.image,
@@ -111,7 +112,7 @@ struct LookBackView: View {
                     Spacer()
                     if isAppear {
                         Button {
-                            print("dd")
+                            self.gotoEmoModi.toggle()
                         } label: {
                             Image(systemName: "pencil")
                         }
@@ -184,7 +185,6 @@ struct LookBackView: View {
 
         do {
             money = try viewContext.fetch(fetchRequest)
-            print(money)
         } catch {
             print("Error fetching memos: \(error.localizedDescription)")
             money = []

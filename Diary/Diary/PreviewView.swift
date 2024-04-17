@@ -10,9 +10,9 @@ import SwiftUI
 struct PreviewView: View {
     
     @Environment(\.managedObjectContext) private var viewContext
-    @FetchRequest(entity: DiaryDate.entity(), sortDescriptors: []) var imageMemo: FetchedResults<DiaryDate>
-    @FetchRequest(entity: Money.entity(), sortDescriptors: []) var money: FetchedResults<Money>
-    @FetchRequest(entity: Emotions.entity(), sortDescriptors: []) var emotion: FetchedResults<Emotions>
+//    @FetchRequest(entity: DiaryDate.entity(), sortDescriptors: []) var imageMemo: FetchedResults<DiaryDate>
+//    @FetchRequest(entity: Money.entity(), sortDescriptors: []) var money: FetchedResults<Money>
+//    @FetchRequest(entity: Emotions.entity(), sortDescriptors: []) var emotion: FetchedResults<Emotions>
     
     // Binding하기
     @Binding var gotoRoot: Bool
