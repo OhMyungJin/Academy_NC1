@@ -116,7 +116,7 @@ struct EmotionModifyView: View {
         do {
             let results = try viewContext.fetch(fetchRequest)
             if let existingEmotion = results.first {
-                // 해당 엔터티의 값을 업데이트합니다.
+                // 해당 엔터티의 값을 업데이트
                 existingEmotion.happy = Int16(sliderValue1)
                 existingEmotion.sad = Int16(sliderValue2)
                 existingEmotion.angry = Int16(sliderValue3)

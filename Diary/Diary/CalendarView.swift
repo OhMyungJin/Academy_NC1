@@ -28,8 +28,8 @@ struct CalendarView: View {
     
     var body: some View {
         VStack{
-            NavigationLink(destination: ImageMemoView(gotoRoot: self.$gotoMemo, dateFormat: $dateFormat), isActive: self.$gotoMemo, label: {})
-            NavigationLink(destination: LookBackView(dateFormat: self.$dateFormat), isActive: self.$gotoBack, label: {})
+            NavigationLink(destination: ImageMemoView(gotoRoot: self.$gotoMemo, dateFormat: $dateFormat).toolbarRole(.editor), isActive: self.$gotoMemo, label: {})
+            NavigationLink(destination: LookBackView(dateFormat: self.$dateFormat).toolbarRole(.editor), isActive: self.$gotoBack, label: {})
 //            MoneyView(dateFormat: $dateFormat)
             
             HStack{
@@ -66,9 +66,14 @@ struct CalendarView: View {
             VStack{
                 if memo != "" {
                     // 메모가 있을 경우 표시
-                    Text(memo)
-                        .frame(maxWidth: .infinity,
-                               maxHeight: .infinity)
+                    HStack{
+                        Text(memo)
+//                            .frame(maxWidth: .infinity,
+//                                   maxHeight: .infinity)
+                        Spacer()
+                    }
+                    Spacer()
+                    
                     // 돌아보기로 가는 버튼
                     Button {
                         print("돌아보기")
@@ -104,6 +109,7 @@ struct CalendarView: View {
                     }
                 }
             }
+            .padding(8)
         }
         .onAppear {
             // 뷰가 나타날 때 dateFormat 설정

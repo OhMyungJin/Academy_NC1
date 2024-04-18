@@ -18,6 +18,14 @@ struct DiaryApp: App {
             }
             .environment(\.managedObjectContext, persistenceController.container.viewContext)
             .accentColor(.hex5E3D25)
+            .onAppear {
+                // UIKit을 사용하여 뒤로가기 버튼 텍스트 숨기기
+                let appearance = UINavigationBarAppearance()
+                appearance.titleTextAttributes = [.foregroundColor: UIColor(Color.hex5E3D25)]
+                
+                UINavigationBar.appearance().standardAppearance = appearance
+                UINavigationBar.appearance().scrollEdgeAppearance = appearance
+            }
         }
     }
 }

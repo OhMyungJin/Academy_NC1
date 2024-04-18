@@ -18,6 +18,8 @@ struct ImageMemoView: View {
     // image, memo 전달용
     @State private var image: UIImage? = nil
     @State private var memoString: String = ""
+    // alert
+    @State private var showingAlert = false
     
     // TextEditor에 작성될 문자열
     @State var diary: String = ""
@@ -29,7 +31,7 @@ struct ImageMemoView: View {
     
     var body: some View {
         VStack{
-            NavigationLink(destination: MoneyView(gotoRoot: self.$gotoRoot, dateFormat: $dateFormat, imageData: $image, memoString: $memoString), isActive: self.$gotoMoney, label: {})
+            NavigationLink(destination: MoneyView(gotoRoot: self.$gotoRoot, dateFormat: $dateFormat, imageData: $image, memoString: $memoString).toolbarRole(.editor), isActive: self.$gotoMoney, label: {})
 //            NavigationLink(destination: CalendarView(), isActive: self.$gotoMoney, label: {})
             
             // 일단 버튼 모양 '이미지추가'로 대체
@@ -51,6 +53,9 @@ struct ImageMemoView: View {
                 // 일기장 생성
                 TextEditor(text: $diary)
                     .lineSpacing(10)
+                    .padding(.init(top: 4, leading: 8, bottom: 0, trailing: 4))
+                    .scrollContentBackground(.hidden)
+                    .cornerRadius(10)
                 
                 // TextEditor에 placeholder기능이 없어서 따로 조건문으로 생성
                 if diary.isEmpty {
@@ -66,33 +71,36 @@ struct ImageMemoView: View {
                 }
             }.overlay{
                 RoundedRectangle(cornerRadius: 10)
-                    .stroke(.white)
+                    .stroke(Color.primary.opacity(0.25))
             }
-            .cornerRadius(10)
             .shadow(radius: 4)
             
         }
         // 내비게이션 설정
         .navigationBarTitle("일기 작성하기", displayMode: .inline)
         .navigationBarItems(trailing:
-            Button("다음") {
+                                Button("다음") {
             
             if diary.isEmpty {
                 print("머쓱")
+                self.showingAlert = true
             } else {
                 memoString = diary
                 self.gotoMoney.toggle()
             }
+        }.alert(isPresented: $showingAlert) {
+            Alert(title: Text("아직!"), message: Text("일기 작성은 필수입니다"), dismissButton: .default(Text("확인")))
         })
         .padding()
         // ImagePicker 표시
         .sheet(isPresented: $openPhoto) {
             ImagePicker(selectedImage: self.$image, sourceType: .photoLibrary)
         }
+       
     }
 }
 
 
 #Preview {
-    ImageMemoView(gotoRoot: Binding.constant(false), dateFormat: Binding.constant("Preview date")).environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+    ImageMemoView(gotoRoot: Binding.constant(false), dateFormat: Binding.constant("Preview date"))
 }

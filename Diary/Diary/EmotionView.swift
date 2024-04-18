@@ -15,6 +15,7 @@ struct EmotionView: View {
     @Binding var imageData: UIImage?
     @Binding var memoString: String
     @Binding var expenseItems: [ExpenseItem]
+//    @Binding var totalPay: [String:Int]
     
     @State private var emotions: Array<Int16> = []
     
@@ -34,7 +35,8 @@ struct EmotionView: View {
     
     var body: some View {
         VStack{
-            NavigationLink(destination: PreviewView(gotoRoot: self.$gotoRoot, dateFormat: $dateFormat, imageData: $imageData, memoString: $memoString, expenseItems: $expenseItems, emotions: $emotions), isActive: self.$gotoPre, label: {})
+            NavigationLink(destination: PreviewView(gotoRoot: self.$gotoRoot, dateFormat: $dateFormat, imageData: $imageData, memoString: $memoString, expenseItems: $expenseItems, emotions: $emotions).toolbarRole(.editor), isActive: self.$gotoPre, label: {})
+//            NavigationLink(destination: PreviewView(gotoRoot: self.$gotoRoot, dateFormat: $dateFormat, imageData: $imageData, memoString: $memoString, expenseItems: $expenseItems, totalPay: $totalPay, emotions: $emotions).toolbarRole(.editor), isActive: self.$gotoPre, label: {})
             
             Spacer()
             
@@ -114,5 +116,8 @@ struct EmotionView: View {
 }
 
 #Preview {
-    EmotionView(gotoRoot: Binding.constant(false), dateFormat: Binding.constant("Preview date"), imageData: Binding.constant(nil), memoString: Binding.constant("Preview date"), expenseItems: Binding.constant([])).environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+    EmotionView(gotoRoot: Binding.constant(false), dateFormat: Binding.constant("Preview date"), imageData: Binding.constant(nil), memoString: Binding.constant("Preview date"), expenseItems: Binding.constant([]))
 }
+//#Preview {
+//    EmotionView(gotoRoot: Binding.constant(false), dateFormat: Binding.constant("Preview date"), imageData: Binding.constant(nil), memoString: Binding.constant("Preview date"), expenseItems: Binding.constant([]), totalPay: Binding.constant([:]))
+//}

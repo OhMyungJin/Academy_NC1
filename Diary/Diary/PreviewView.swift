@@ -20,6 +20,7 @@ struct PreviewView: View {
     @Binding var imageData: UIImage?
     @Binding var memoString: String
     @Binding var expenseItems: [ExpenseItem]
+//    @Binding var totalPay: [String:Int]
     @Binding var emotions: Array<Int16>
     
     var body: some View {
@@ -37,13 +38,18 @@ struct PreviewView: View {
                     Text(dateFormat)
                     Spacer()
                 }
-                Text(memoString)
-                    .frame(maxWidth: .infinity)
+                HStack{
+                    Text(memoString)
+                    Spacer()
+                }
+                .padding(8)
                 
                 Divider()
                 
                 HStack{
                     Text("지출")
+//                        .font(.headline.bold())
+                        .font(.title3.bold())
                         .foregroundColor(.hex5E3D25)
                     Spacer()
                 }
@@ -52,21 +58,27 @@ struct PreviewView: View {
                     // 지출이 없습니다 나올 수 있도록 나중에 수정
                     // 지금은 제거하기도 안되고 지출이 없을 때 어떻게 해야하는지 아이디어 찾아야함
                     Text("지출이 없습니다.")
+                    
                 } else {
                     HStack{
                         Text("분류")
+                            .font(.headline.bold())
                         Spacer()
                         Text("가격")
-                            .padding(.trailing)
+                            .font(.headline.bold())
+//                            .padding(.trailing)
                     }
+                    .padding(.top, 8)
+                    
                     ForEach($expenseItems, id: \.id) { $item in
                         HStack{
                             // 카테고리 출력
                             Text(item.category.category)
                             Spacer()
                             // 가격 출력
-                            Text(item.price)
+                            Text("\(item.price)원")
                         }
+                        .padding(.top, 4)
                     }
                 }
 
@@ -74,6 +86,8 @@ struct PreviewView: View {
                 
                 HStack{
                     Text("감정")
+                        .font(.title3.bold())
+                        .foregroundColor(.hex5E3D25)
                     Spacer()
                 }
                 
@@ -123,7 +137,7 @@ struct PreviewView: View {
         
         newDiary.dateString = dateFormat
         newDiary.memo = memoString
-        
+            
         for item in expenseItems {
             let newMoney = Money(context: viewContext)
             newMoney.dateString = dateFormat
@@ -131,6 +145,14 @@ struct PreviewView: View {
             newMoney.price = item.price
             newMoney.detail = item.detail
         }
+        
+//        for (category, totalPrice) in totalPay {
+//            let newMoneyTotal = MoneyTotal(context: viewContext)
+//            newMoneyTotal.dateString = dateFormat
+//            newMoneyTotal.category = category
+//            newMoneyTotal.totalPrice = Int64(totalPrice) // totalPrice를 Int64로 변환하여 저장
+//        }
+        
         
         let newFeels = Emotions(context: viewContext)
         newFeels.dateString = dateFormat
@@ -158,5 +180,8 @@ struct PreviewView: View {
 }
 
 #Preview {
-    PreviewView(gotoRoot: Binding.constant(false), dateFormat: Binding.constant("Preview date"), imageData: Binding.constant(nil), memoString: Binding.constant("Preview date"), expenseItems: Binding.constant([]), emotions: Binding.constant([85,20,30,33,12])).environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+    PreviewView(gotoRoot: Binding.constant(false), dateFormat: Binding.constant("Preview date"), imageData: Binding.constant(nil), memoString: Binding.constant("Preview date"), expenseItems: Binding.constant([]), emotions: Binding.constant([85,20,30,33,12]))
 }
+//#Preview {
+//    PreviewView(gotoRoot: Binding.constant(false), dateFormat: Binding.constant("Preview date"), imageData: Binding.constant(nil), memoString: Binding.constant("Preview date"), expenseItems: Binding.constant([]), totalPay: Binding.constant([:]), emotions: Binding.constant([85,20,30,33,12]))
+//}

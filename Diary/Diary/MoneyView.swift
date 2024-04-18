@@ -48,14 +48,24 @@ struct MoneyView: View {
     
     // expenseItems 초기화, category 값을 '.고정비'로 지정
     @State private var expenseItems: [ExpenseItem] = [ExpenseItem(category: .고정비)]
+//    @State private var totalPay: [String: Int] = [:]
+    // alert
+    @State private var showingAlert = false
     
     @State var gotoEmo = false
+    
+    private let numberFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 0 // 소수점 없음
+        return formatter
+    }()
     
     var body: some View {
         ScrollView{
             VStack {
-                NavigationLink(destination: EmotionView(gotoRoot: self.$gotoRoot, dateFormat: $dateFormat, imageData: $imageData, memoString: $memoString, expenseItems: $expenseItems), isActive: self.$gotoEmo, label: {})
-                //            NavigationLink(destination: test().environment(\.managedObjectContext, persistenceController.container.viewContext), isActive: self.$gotoEmo, label: {})
+                NavigationLink(destination: EmotionView(gotoRoot: self.$gotoRoot, dateFormat: $dateFormat, imageData: $imageData, memoString: $memoString, expenseItems: $expenseItems).toolbarRole(.editor), isActive: self.$gotoEmo, label: {})
+//                NavigationLink(destination: EmotionView(gotoRoot: self.$gotoRoot, dateFormat: $dateFormat, imageData: $imageData, memoString: $memoString, expenseItems: $expenseItems, totalPay: $totalPay).toolbarRole(.editor), isActive: self.$gotoEmo, label: {})
                 
                 // 지출 항목을 그리드 형식으로 표시
                 LazyVGrid(columns: [GridItem(.flexible())]) {
@@ -94,13 +104,18 @@ struct MoneyView: View {
 //                                    .foregroundColor(.white)
 //                                TextField("", value: $item.price, formatter: NumberFormatter())
                                 TextField("", text: $item.price)
-                                    .keyboardType(.decimalPad)
+                                    .onChange(of: item.price) { newValue in
+                                        item.price = formatNumberString(input: newValue)
+                                    }
+                                    .padding(.leading, 8)
+                                    .keyboardType(.numberPad)
                                     .frame(maxWidth: .infinity)
                                     .frame(height: 40)
                                     .background(RoundedRectangle(cornerRadius: 10)
                                         .fill(Color.hexEFEFEF))
-                                    .padding(.leading, 16)
-                                    .padding(.trailing, 16)
+                                    .padding(.init(top: 0, leading: 16, bottom: 0, trailing: 16))
+//                                    .padding(EdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 0))
+//                                    .padding(.horizontal, 16)
                             }
                             
                             // 내용 입력
@@ -113,6 +128,7 @@ struct MoneyView: View {
                                     Spacer()
                                 }
                                 TextEditor(text: $item.detail)
+                                    .padding(.leading, 4)
                                     .scrollContentBackground(.hidden)
                                     .background(Color.hexEFEFEF)
                                     .cornerRadius(10)
@@ -135,14 +151,18 @@ struct MoneyView: View {
                 HStack {
                     // 마지막 지출 항목 제거
                     Button {
-                        if expenseItems.count > 1 {
-                            expenseItems.removeLast()
+                        withAnimation {
+                            if expenseItems.count > 0 {
+                                expenseItems.removeLast()
+                            }
                         }
                     } label: {
-//                        Image("remove")
-//                            .resizable()
-//                            .frame(width: 27, height: 27)
-                        Text("제거하기")
+                        HStack{
+                            Image("remove")
+                                .resizable()
+                                .frame(width: 27, height: 27)
+                            Text("제거하기")
+                        }
                             .frame(width: 147)
                             .frame(height: 40)
                             .font(.system(size:16, weight: .medium))
@@ -153,10 +173,16 @@ struct MoneyView: View {
                     }
                     // 새 지출 항목 추가
                     Button {
-                        print(dateFormat)
-                        expenseItems.append(ExpenseItem(category: .고정비))
+                        withAnimation {
+                            expenseItems.append(ExpenseItem(category: .고정비))
+                        }
                     } label: {
-                        Text("추가하기")
+                        HStack{
+                            Image("add")
+                                .resizable()
+                                .frame(width: 27, height: 27)
+                            Text("추가하기")
+                        }
                             .frame(width: 147)
                             .frame(height: 40)
                             .font(.system(size:16, weight: .medium))
@@ -174,12 +200,50 @@ struct MoneyView: View {
         .navigationBarTitle("지출 작성하기", displayMode: .inline)
         .navigationBarItems(trailing:
             Button("다음") {
-            self.gotoEmo.toggle()
+            if isRequiredFieldsEmpty() {
+                showingAlert = true
+            } else {
+                self.gotoEmo.toggle()
+            }
+        }.alert(isPresented: $showingAlert) {
+            Alert(title: Text("아직!"), message: Text("빈칸이 없도록 작성해주세요"), dismissButton: .default(Text("확인")))
         })
     }
+    
+    func formatNumberString(input: String) -> String {
+        let filtered = input.filter { "0123456789".contains($0) }
+        let number = numberFormatter.number(from: filtered)
+        return numberFormatter.string(from: number ?? 0) ?? ""
+    }
+    
+    func isRequiredFieldsEmpty() -> Bool {
+        for item in expenseItems {
+            if item.price.isEmpty || item.detail.isEmpty {
+                return true
+            }
+        }
+        return false
+    }
+    
+    // 나중에 토탈...
+//    func totalPayCalculation() {
+//        var categoryExpenses: [String: Int] = [:]
+//        
+//        for item in expenseItems {
+//            // 해당 카테고리가 이미 딕셔너리에 존재하는지 확인하고, 있다면 가격을 더해줌
+//            if let existingExpense = categoryExpenses[item.category.category] {
+//                categoryExpenses[item.category.category] = existingExpense + Int(item.price)!
+//            } else {
+//                // 해당 카테고리가 딕셔너리에 없다면 새로운 항목으로 추가
+//                categoryExpenses[item.category.category] = Int(item.price)
+//            }
+//        }
+//        
+//        totalPay = categoryExpenses
+//    }
 }
 
 
 #Preview {
-    MoneyView(gotoRoot: Binding.constant(false), dateFormat: Binding.constant("Preview date"), imageData: Binding.constant(nil), memoString: Binding.constant("Preview date")).environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+    MoneyView(gotoRoot: Binding.constant(false), dateFormat: Binding.constant("Preview date"), imageData: Binding.constant(nil), memoString: Binding.constant("Preview date"))
 }

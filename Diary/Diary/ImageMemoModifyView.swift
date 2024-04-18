@@ -18,6 +18,8 @@ struct ImageMemoModifyView: View {
     
     @State private var openPhoto = false
     @State private var image: UIImage? = nil
+    // alert
+    @State private var showingAlert = false
     
     @State var text: String = ""
     
@@ -51,11 +53,13 @@ struct ImageMemoModifyView: View {
             // 일기장 생성
             TextEditor(text: $text)
                 .lineSpacing(10)
+                .padding(.init(top: 4, leading: 8, bottom: 0, trailing: 4))
+                .scrollContentBackground(.hidden)
+                .cornerRadius(10)
                 .overlay{
                     RoundedRectangle(cornerRadius: 10)
                         .stroke(.white)
                 }
-                .cornerRadius(10)
                 .shadow(radius: 4)
             
         }
@@ -65,10 +69,12 @@ struct ImageMemoModifyView: View {
             Button("완료") {
             if text.isEmpty {
                 print("머쓱")
+                self.showingAlert = true
             } else {
                 updateItem()
-//                backtoModi = false
             }
+        }.alert(isPresented: $showingAlert) {
+            Alert(title: Text("아직!"), message: Text("일기 작성은 필수입니다"), dismissButton: .default(Text("확인")))
         })
         .padding()
         // ImagePicker 표시
@@ -89,7 +95,7 @@ struct ImageMemoModifyView: View {
         do {
             let results = try viewContext.fetch(fetchRequest)
             if let existingDiary = results.first {
-                // 해당 엔터티의 값을 업데이트합니다.
+                // 해당 엔터티의 값을 업데이트
                 if let uiImage = image {
                     if let imageData = uiImage.jpegData(compressionQuality: 1.0) {
                         existingDiary.image = imageData

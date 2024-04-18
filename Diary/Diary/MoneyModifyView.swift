@@ -17,6 +17,15 @@ struct MoneyModifyView: View {
     @Binding var money: [Money]
     
     @State private var expenseItems: [ExpenseItem] = [ExpenseItem(category: .고정비)]
+    // alert
+    @State private var showingAlert = false
+    
+    private let numberFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 0 // 소수점 없음
+        return formatter
+    }()
     
     var body: some View {
         ScrollView {
@@ -51,6 +60,10 @@ struct MoneyModifyView: View {
                                     .frame(height: 40)
                                     .padding(.leading, 20)
                                 TextField("", text: $item.price)
+                                    .onChange(of: item.price) { newValue in
+                                        item.price = formatNumberString(input: newValue)
+                                    }
+                                    .padding(.leading, 8)
                                     .keyboardType(.decimalPad)
                                     .frame(maxWidth: .infinity)
                                     .frame(height: 40)
@@ -68,6 +81,7 @@ struct MoneyModifyView: View {
                                     Spacer()
                                 }
                                 TextEditor(text: $item.detail)
+                                    .padding(.leading, 4)
                                     .scrollContentBackground(.hidden)
                                     .background(Color.hexEFEFEF)
 //                                    .frame(maxWidth: .infinity)
@@ -87,28 +101,42 @@ struct MoneyModifyView: View {
                 // Buttons for adding and removing expense items
                 HStack {
                     Button {
-                        if expenseItems.count > 1 {
-                            expenseItems.removeLast()
+                        withAnimation {
+                            if expenseItems.count > 0 {
+                                expenseItems.removeLast()
+                            }
                         }
                     } label: {
-                        Text("제거하기")
+                        HStack{
+                            Image("remove")
+                                .resizable()
+                                .frame(width: 27, height: 27)
+                            Text("제거하기")
+                        }
                             .frame(width: 147)
                             .frame(height: 40)
                             .font(.system(size:16, weight: .medium))
-                            .foregroundColor(.black)
+                            .foregroundColor(.white)
                             .background(
                                 RoundedRectangle(cornerRadius: 10)
                                     .fill(Color.hex677775))
                     }
                     
                     Button {
-                        expenseItems.append(ExpenseItem(category: .고정비))
+                        withAnimation {
+                            expenseItems.append(ExpenseItem(category: .고정비))
+                        }
                     } label: {
-                        Text("추가하기")
+                        HStack{
+                            Image("add")
+                                .resizable()
+                                .frame(width: 27, height: 27)
+                            Text("추가하기")
+                        }
                             .frame(width: 147)
                             .frame(height: 40)
                             .font(.system(size:16, weight: .medium))
-                            .foregroundColor(.black)
+                            .foregroundColor(.white)
                             .background(
                                 RoundedRectangle(cornerRadius: 10)
                                     .fill(Color.hex5E3D25))
@@ -129,8 +157,14 @@ struct MoneyModifyView: View {
         .navigationBarTitle("지출 수정하기", displayMode: .inline)
         .navigationBarItems(trailing:
             Button("완료") {
+            if isRequiredFieldsEmpty() {
+                showingAlert = true
+            } else {
                 updateItem()
-            })
+            }
+        }.alert(isPresented: $showingAlert) {
+            Alert(title: Text("아직!"), message: Text("빈칸이 없도록 작성해주세요"), dismissButton: .default(Text("확인")))
+        })
     }
     
     // Function to save money data
@@ -159,5 +193,20 @@ struct MoneyModifyView: View {
         } catch {
             print("Error saving money data: \(error.localizedDescription)")
         }
+    }
+    
+    func formatNumberString(input: String) -> String {
+        let filtered = input.filter { "0123456789".contains($0) }
+        let number = numberFormatter.number(from: filtered)
+        return numberFormatter.string(from: number ?? 0) ?? ""
+    }
+    
+    func isRequiredFieldsEmpty() -> Bool {
+        for item in expenseItems {
+            if item.price.isEmpty || item.detail.isEmpty {
+                return true
+            }
+        }
+        return false
     }
 }

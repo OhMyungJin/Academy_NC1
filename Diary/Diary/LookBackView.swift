@@ -35,10 +35,9 @@ struct LookBackView: View {
         ScrollView{
             VStack{
                 // \.managedObjectContext, persistenceController.container.viewContext 왜쓰는지 알아보셈
-                NavigationLink(destination: ImageMemoModifyView(dateFormat: $dateFormat, diary: $diary), isActive: self.$gotoMemoModi, label: {})
-                NavigationLink(destination: MoneyModifyView(dateFormat: $dateFormat, money: $money), isActive: self.$gotoMoneyModi, label: {})
-                NavigationLink(destination: EmotionModifyView(dateFormat: $dateFormat, feels: $feels), isActive: self.$gotoEmoModi, label: {})
-                
+                NavigationLink(destination: ImageMemoModifyView(dateFormat: $dateFormat, diary: $diary).toolbarRole(.editor), isActive: self.$gotoMemoModi, label: {})
+                NavigationLink(destination: MoneyModifyView(dateFormat: $dateFormat, money: $money).toolbarRole(.editor), isActive: self.$gotoMoneyModi, label: {})
+                NavigationLink(destination: EmotionModifyView(dateFormat: $dateFormat, feels: $feels).toolbarRole(.editor), isActive: self.$gotoEmoModi, label: {})
                 
                 if let image = diary.first?.image,
                    let uiImage = UIImage(data: image){
@@ -63,13 +62,18 @@ struct LookBackView: View {
                     
                 }
                 
-                Text(diaryMemo)
-                    .frame(maxWidth: .infinity)
+                HStack{
+                    Text(diaryMemo)
+                    Spacer()
+                }
+                .padding(8)
                 
                 Divider()
                 
                 HStack{
                     Text("지출")
+                        .font(.title3.bold())
+                        .foregroundColor(.hex5E3D25)
                     Spacer()
                     if isAppear {
                         Button {
@@ -90,10 +94,13 @@ struct LookBackView: View {
                     } else {
                         HStack{
                             Text("분류")
+                                .font(.headline.bold())
                             Spacer()
                             Text("가격")
-                                .padding(.trailing)
+                                .font(.headline.bold())
+//                                .padding(.trailing)
                         }
+                        .padding(.top, 8)
                         
                         ForEach($money, id: \.id) { $item in
                             HStack{
@@ -101,8 +108,9 @@ struct LookBackView: View {
                                 Text(item.category!)
                                 Spacer()
                                 // 가격 출력
-                                Text(item.price!)
+                                Text("\(item.price!)원")
                             }
+                            .padding(.top, 4)
                         }
                     }
                 }
@@ -111,6 +119,8 @@ struct LookBackView: View {
                 
                 HStack{
                     Text("감정")
+                        .font(.title3.bold())
+                        .foregroundColor(.hex5E3D25)
                     Spacer()
                     if isAppear {
                         Button {
@@ -160,7 +170,7 @@ struct LookBackView: View {
             }
             .padding()
         }
-        .navigationBarTitle("돌아보기", displayMode: .inline)
+        .navigationBarTitle("\(dateFormat.suffix(6).prefix(2))/\(dateFormat.suffix(2))", displayMode: .inline)
         .navigationBarItems(trailing:
             Button{
             self.isAppear.toggle()
@@ -168,9 +178,10 @@ struct LookBackView: View {
         } label: {
             if isAppear {
                 Text("완료")
+                    .navigationBarBackButtonHidden(true)
             } else {
                 Text("수정")
-                
+                    .navigationBarBackButtonHidden(false)
             }
         })
     }
