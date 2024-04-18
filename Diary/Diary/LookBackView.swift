@@ -21,17 +21,23 @@ struct LookBackView: View {
     @State private var gotoMemoModi: Bool = false
     @State private var gotoMoneyModi: Bool = false
     @State private var gotoEmoModi: Bool = false
-    
+
     @State var isAppear = false
     
-    let persistenceController = PersistenceController.shared
+    @State var diaryMemo = ""
+    @State var happy = 0
+    @State var sad = 0
+    @State var angry = 0
+    @State var panic = 0
+    @State var anxiety = 0
     
     var body: some View {
         ScrollView{
             VStack{
-                NavigationLink(destination: ImageMemoModifyView(dateFormat: $dateFormat, diary: $diary).environment(\.managedObjectContext, persistenceController.container.viewContext), isActive: self.$gotoMemoModi, label: {})
-                NavigationLink(destination: MoneyModifyView(dateFormat: $dateFormat, money: $money).environment(\.managedObjectContext, persistenceController.container.viewContext), isActive: self.$gotoMoneyModi, label: {})
-                NavigationLink(destination: EmotionModifyView(dateFormat: $dateFormat, feels: $feels).environment(\.managedObjectContext, persistenceController.container.viewContext), isActive: self.$gotoEmoModi, label: {})
+                // \.managedObjectContext, persistenceController.container.viewContext 왜쓰는지 알아보셈
+                NavigationLink(destination: ImageMemoModifyView(dateFormat: $dateFormat, diary: $diary), isActive: self.$gotoMemoModi, label: {})
+                NavigationLink(destination: MoneyModifyView(dateFormat: $dateFormat, money: $money), isActive: self.$gotoMoneyModi, label: {})
+                NavigationLink(destination: EmotionModifyView(dateFormat: $dateFormat, feels: $feels), isActive: self.$gotoEmoModi, label: {})
                 
                 
                 if let image = diary.first?.image,
@@ -57,14 +63,8 @@ struct LookBackView: View {
                     
                 }
                 
-                VStack {
-                    if let memo = diary.first?.memo {
-                        Text(memo)
-                    } else { // 없을리가 없긴할텐데 일단 넣어
-                        Text("No Memo")
-                    }
-                }
-                .frame(maxWidth: .infinity)
+                Text(diaryMemo)
+                    .frame(maxWidth: .infinity)
                 
                 Divider()
                 
@@ -124,22 +124,22 @@ struct LookBackView: View {
                 
                 HStack{
                     Text("😊")
-                    Text("\(feels.first?.happy ?? 0)%")
+                    Text("\(happy)%")
                     Spacer()
                     Text("😭")
-                    Text("\(feels.first?.sad ?? 0)%")
+                    Text("\(sad)%")
                     Spacer()
                     Text("😡")
-                    Text("\(feels.first?.angry ?? 0)%")
+                    Text("\(angry)%")
                 }
                 .padding()
                 HStack{
                     Spacer()
                     Text("😅")
-                    Text("\(feels.first?.panic ?? 0)%")
+                    Text("\(panic)%")
                     Spacer()
                     Text("😳")
-                    Text("\(feels.first?.anxiety ?? 0)%")
+                    Text("\(anxiety)%")
                     Spacer()
                 }
             }
@@ -147,11 +147,16 @@ struct LookBackView: View {
                 loadDiaryData()
                 loadMoneyData()
                 loadFeelsData()
-            }
-            .onChange(of: dateFormat) { _ in
-                loadDiaryData()
-                loadMoneyData()
-                loadFeelsData()
+                
+                if let memo = diary.first?.memo {
+                    self.diaryMemo = memo
+                }
+                
+                self.happy = Int(feels.first!.happy)
+                self.sad = Int(feels.first!.sad)
+                self.angry = Int(feels.first!.angry)
+                self.panic = Int(feels.first!.panic)
+                self.anxiety = Int(feels.first!.anxiety)
             }
             .padding()
         }
@@ -159,11 +164,13 @@ struct LookBackView: View {
         .navigationBarItems(trailing:
             Button{
             self.isAppear.toggle()
+            
         } label: {
             if isAppear {
                 Text("완료")
             } else {
                 Text("수정")
+                
             }
         })
     }
@@ -188,7 +195,6 @@ struct LookBackView: View {
 
         do {
             money = try viewContext.fetch(fetchRequest)
-            print(money)
         } catch {
             print("Error fetching memos: \(error.localizedDescription)")
             money = []

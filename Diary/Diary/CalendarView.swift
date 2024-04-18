@@ -10,21 +10,26 @@ import CoreData
 
 struct CalendarView: View {
     
+    @Environment(\.managedObjectContext) private var viewContext
+    
     // date에 날짜의 정보 저장
     @State private var date = Date()
     // 지정 날짜 정보 표시/전달
     @State private var dateFormat: String = ""
-    
+    // DiaryDate
+    @State private var diary: [DiaryDate] = []
     // 화면 전환 여부
     @State private var gotoMemo: Bool = false
     @State private var gotoBack: Bool = false
+    
+    @State var memo: String = ""
     
     let persistenceController = PersistenceController.shared
     
     var body: some View {
         VStack{
             NavigationLink(destination: ImageMemoView(gotoRoot: self.$gotoMemo, dateFormat: $dateFormat), isActive: self.$gotoMemo, label: {})
-            NavigationLink(destination: LookBackView(dateFormat: self.$dateFormat).environment(\.managedObjectContext, persistenceController.container.viewContext), isActive: self.$gotoBack, label: {})
+            NavigationLink(destination: LookBackView(dateFormat: self.$dateFormat), isActive: self.$gotoBack, label: {})
 //            MoneyView(dateFormat: $dateFormat)
             
             HStack{
@@ -48,14 +53,6 @@ struct CalendarView: View {
             )
             .datePickerStyle(.graphical)
             .accentColor(.hex5E3D25)
-            // 뷰가 나타날 때 dateFormat 설정
-            .onAppear {
-                dateFormat = dateFormatter.string(from: date)
-            }
-            // 날짜를 선택할 때 dateFormat 변경
-            .onChange(of: date) { newValue in
-                dateFormat = dateFormatter.string(from: newValue)
-            }
             
             Divider()
             
@@ -67,7 +64,7 @@ struct CalendarView: View {
             }
             
             VStack{
-                if let memo = fetchMemoForDate(date: dateFormat) {
+                if memo != "" {
                     // 메모가 있을 경우 표시
                     Text(memo)
                         .frame(maxWidth: .infinity,
@@ -108,33 +105,38 @@ struct CalendarView: View {
                 }
             }
         }
+        .onAppear {
+            // 뷰가 나타날 때 dateFormat 설정
+            dateFormat = dateFormatter.string(from: date)
+            loadDiaryData()
+            if let memo = diary.first?.memo {
+                self.memo = memo
+            } else {
+                self.memo = ""
+            }
+        }
+        .onChange(of: date) { newValue in
+            // 날짜를 선택할 때 dateFormat 변경
+            dateFormat = dateFormatter.string(from: newValue)
+            loadDiaryData()
+            if let memo = diary.first?.memo {
+                self.memo = memo
+            } else {
+                self.memo = ""
+            }
+        }
         .padding()
     }
-    
-    func fetchMemoForDate(date: String) -> String? {
-        let context = PersistenceController.shared.container.viewContext
-        
-        // CoreData에서 해당 날짜에 맞는 메모를 검색
+    private func loadDiaryData() {
         let fetchRequest: NSFetchRequest<DiaryDate> = DiaryDate.fetchRequest()
-        
-        // CoreData에서 날짜에 해당하는 메모를 찾기 위한 predicate 설정
-        let predicate = NSPredicate(format: "dateString == %@", date)
-        fetchRequest.predicate = predicate
+        fetchRequest.predicate = NSPredicate(format: "dateString == %@", dateFormat)
+        fetchRequest.sortDescriptors = [] // 정렬 기준이 필요하면 여기에 추가
         
         do {
-            // CoreData에서 메모를 가져오기
-            let result = try context.fetch(fetchRequest)
-            
-            // 결과가 있는 경우 메모 반환
-            if let memo = result.first {
-                return memo.memo
-            } else { // 결과가 없는 경우
-                return nil
-            }
+            diary = try viewContext.fetch(fetchRequest)
         } catch {
-            // 에러 발생 시 처리
-            print("Error fetching memo for date: \(error.localizedDescription)")
-            return nil
+            print("Error fetching memos: \(error.localizedDescription)")
+            diary = []
         }
     }
 }
