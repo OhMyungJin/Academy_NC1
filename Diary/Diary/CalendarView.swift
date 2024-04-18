@@ -36,6 +36,7 @@ struct CalendarView: View {
                     Image(systemName: "person.fill")
                         .imageScale(.large)
                         .font(.title)
+                        .foregroundColor(.hex5E3D25)
                 }
             }
             // 캘린더 생성
@@ -46,6 +47,7 @@ struct CalendarView: View {
                 displayedComponents: [.date]
             )
             .datePickerStyle(.graphical)
+            .accentColor(.hex5E3D25)
             // 뷰가 나타날 때 dateFormat 설정
             .onAppear {
                 dateFormat = dateFormatter.string(from: date)
@@ -60,6 +62,7 @@ struct CalendarView: View {
             HStack{
                 // 선택 날짜 표시
                 Text(dateFormat)
+                    .padding(4)
                 Spacer()
             }
             
@@ -78,10 +81,10 @@ struct CalendarView: View {
                             .frame(maxWidth: .infinity)
                             .frame(height: 40)
                             .font(.system(size:16, weight: .medium))
-                            .foregroundColor(.black)
+                            .foregroundColor(.white)
                             .background(
                                 RoundedRectangle(cornerRadius: 10)
-                                    .fill(Color.blue))
+                                    .fill(Color.hex677775))
                     }
                 } else {
                     // 메모가 없을 경우 기본 문구 표시
@@ -97,10 +100,10 @@ struct CalendarView: View {
                             .frame(maxWidth: .infinity)
                             .frame(height: 40)
                             .font(.system(size:16, weight: .medium))
-                            .foregroundColor(.black)
+                            .foregroundColor(.white)
                             .background(
                                 RoundedRectangle(cornerRadius: 10)
-                                    .fill(Color.gray))
+                                    .fill(Color.hex5E3D25))
                     }
                 }
             }

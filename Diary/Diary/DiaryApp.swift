@@ -17,6 +17,7 @@ struct DiaryApp: App {
                 CalendarView()
                     .environment(\.managedObjectContext, persistenceController.container.viewContext)
             }
+            .accentColor(.hex5E3D25)
         }
     }
 }

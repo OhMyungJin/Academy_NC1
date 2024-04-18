@@ -51,6 +51,7 @@ struct LookBackView: View {
                                 
                         } label: {
                             Image(systemName: "pencil")
+                                .foregroundColor(.hex5E3D25)
                         }
                     }
                     
@@ -75,6 +76,7 @@ struct LookBackView: View {
                             self.gotoMoneyModi.toggle()
                         } label: {
                             Image(systemName: "pencil")
+                                .foregroundColor(.hex5E3D25)
                         }
                     }
                 }
@@ -115,6 +117,7 @@ struct LookBackView: View {
                             self.gotoEmoModi.toggle()
                         } label: {
                             Image(systemName: "pencil")
+                                .foregroundColor(.hex5E3D25)
                         }
                     }
                 }
@@ -185,6 +188,7 @@ struct LookBackView: View {
 
         do {
             money = try viewContext.fetch(fetchRequest)
+            print(money)
         } catch {
             print("Error fetching memos: \(error.localizedDescription)")
             money = []

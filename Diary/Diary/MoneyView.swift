@@ -67,6 +67,7 @@ struct MoneyView: View {
                                     .frame(height: 40)
                                     .padding(.leading, 20)
                                     .padding(.top, 8)
+//                                    .foregroundColor(.white)
                                 // Picker를 사용하여 분류 선택
                                 Picker(
                                     "category",
@@ -77,10 +78,11 @@ struct MoneyView: View {
                                     }
                                 }
                                 .pickerStyle(.automatic)
+                                .accentColor(.black)
                                 .frame(maxWidth: .infinity)
                                 .frame(height: 40)
                                 .background(RoundedRectangle(cornerRadius: 10)
-                                    .fill(.white))
+                                    .fill(Color.hexEFEFEF))
                                 .padding(.init(top: 16, leading: 16, bottom: 8, trailing: 16))
                             }
                             
@@ -89,12 +91,14 @@ struct MoneyView: View {
                                 Text("가격")
                                     .frame(height: 40)
                                     .padding(.leading, 20)
+//                                    .foregroundColor(.white)
 //                                TextField("", value: $item.price, formatter: NumberFormatter())
                                 TextField("", text: $item.price)
+                                    .keyboardType(.decimalPad)
                                     .frame(maxWidth: .infinity)
                                     .frame(height: 40)
                                     .background(RoundedRectangle(cornerRadius: 10)
-                                        .fill(.white))
+                                        .fill(Color.hexEFEFEF))
                                     .padding(.leading, 16)
                                     .padding(.trailing, 16)
                             }
@@ -104,14 +108,18 @@ struct MoneyView: View {
                                 VStack {
                                     Text("내용")
                                         .padding(.leading, 20)
-                                        .padding(.top, 24)
+                                        .padding(.top, 16)
+//                                        .foregroundColor(.white)
                                     Spacer()
                                 }
                                 TextEditor(text: $item.detail)
-                                    .frame(maxWidth: .infinity)
-                                    .frame(height: 90)
+                                    .scrollContentBackground(.hidden)
+                                    .background(Color.hexEFEFEF)
                                     .cornerRadius(10)
+//                                    .frame(maxWidth: .infinity)
+//                                    .frame(height: 90)
                                     .padding(.init(top: 8, leading: 16, bottom: 16, trailing: 16))
+                                
                             }
                             
                         }
@@ -119,7 +127,7 @@ struct MoneyView: View {
                         .frame(height: 244)
                         .background(
                             RoundedRectangle(cornerRadius: 10)
-                                .fill(.gray))
+                                .fill(Color.hex886D5A))
                         
                     }
                 }
@@ -131,14 +139,17 @@ struct MoneyView: View {
                             expenseItems.removeLast()
                         }
                     } label: {
+//                        Image("remove")
+//                            .resizable()
+//                            .frame(width: 27, height: 27)
                         Text("제거하기")
                             .frame(width: 147)
                             .frame(height: 40)
                             .font(.system(size:16, weight: .medium))
-                            .foregroundColor(.black)
+                            .foregroundColor(.white)
                             .background(
                                 RoundedRectangle(cornerRadius: 10)
-                                    .fill(Color.gray))
+                                    .fill(Color.hex677775))
                     }
                     // 새 지출 항목 추가
                     Button {
@@ -149,10 +160,10 @@ struct MoneyView: View {
                             .frame(width: 147)
                             .frame(height: 40)
                             .font(.system(size:16, weight: .medium))
-                            .foregroundColor(.black)
+                            .foregroundColor(.white)
                             .background(
                                 RoundedRectangle(cornerRadius: 10)
-                                    .fill(Color.gray))
+                                    .fill(Color.hex5E3D25))
                     }
                 }
                 

@@ -51,7 +51,12 @@ struct ImageMemoModifyView: View {
             // 일기장 생성
             TextEditor(text: $text)
                 .lineSpacing(10)
-                .border(Color.gray, width: 3)
+                .overlay{
+                    RoundedRectangle(cornerRadius: 10)
+                        .stroke(.white)
+                }
+                .cornerRadius(10)
+                .shadow(radius: 4)
             
         }
         // 내비게이션 설정

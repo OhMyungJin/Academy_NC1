@@ -51,10 +51,10 @@ struct EmotionView: View {
             HStack {
                 
                 Slider(value: $sliderValue1, in: minimumValue...maximumValue)
-                    .accentColor(.orange)
+                    .accentColor(.hexFFDCAB)
                 
-                Text("\(Int(sliderValue1))")
-                    .frame(width: 40)
+                Text("\(Int(sliderValue1))%")
+                    .frame(width: 50)
             }
             .padding(.init(top: 0, leading: 16, bottom: 24, trailing: 16))
             
@@ -62,10 +62,10 @@ struct EmotionView: View {
             HStack {
                 
                 Slider(value: $sliderValue2, in: minimumValue...maximumValue)
-                    .accentColor(.orange)
+                    .accentColor(.hexFFDCAB)
                 
-                Text("\(Int(sliderValue2))")
-                    .frame(width: 40)
+                Text("\(Int(sliderValue2))%")
+                    .frame(width: 50)
             }
             .padding(.init(top: 0, leading: 16, bottom: 24, trailing: 16))
             
@@ -73,10 +73,10 @@ struct EmotionView: View {
             HStack {
                 
                 Slider(value: $sliderValue3, in: minimumValue...maximumValue)
-                    .accentColor(.orange)
+                    .accentColor(.hexFFDCAB)
                 
-                Text("\(Int(sliderValue3))")
-                    .frame(width: 40)
+                Text("\(Int(sliderValue3))%")
+                    .frame(width: 50)
             }
             .padding(.init(top: 0, leading: 16, bottom: 24, trailing: 16))
             
@@ -84,10 +84,10 @@ struct EmotionView: View {
             HStack {
                 
                 Slider(value: $sliderValue4, in: minimumValue...maximumValue)
-                    .accentColor(.orange)
+                    .accentColor(.hexFFDCAB)
                 
-                Text("\(Int(sliderValue4))")
-                    .frame(width: 40)
+                Text("\(Int(sliderValue4))%")
+                    .frame(width: 50)
             }
             .padding(.init(top: 0, leading: 16, bottom: 24, trailing: 16))
             
@@ -95,10 +95,10 @@ struct EmotionView: View {
             HStack {
                 
                 Slider(value: $sliderValue5, in: minimumValue...maximumValue)
-                    .accentColor(.orange)
+                    .accentColor(.hexFFDCAB)
                 
-                Text("\(Int(sliderValue5))")
-                    .frame(width: 40)
+                Text("\(Int(sliderValue5))%")
+                    .frame(width: 50)
             }
             .padding(.init(top: 0, leading: 16, bottom: 24, trailing: 16))
             

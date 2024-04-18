@@ -42,7 +42,7 @@ struct MoneyModifyView: View {
                                 .frame(maxWidth: .infinity)
                                 .frame(height: 40)
                                 .background(RoundedRectangle(cornerRadius: 10)
-                                                .fill(.white))
+                                    .fill(Color.hexEFEFEF))
                                 .padding(.init(top: 16, leading: 16, bottom: 8, trailing: 16))
                             }
                             
@@ -51,10 +51,11 @@ struct MoneyModifyView: View {
                                     .frame(height: 40)
                                     .padding(.leading, 20)
                                 TextField("", text: $item.price)
+                                    .keyboardType(.decimalPad)
                                     .frame(maxWidth: .infinity)
                                     .frame(height: 40)
                                     .background(RoundedRectangle(cornerRadius: 10)
-                                                    .fill(.white))
+                                        .fill(Color.hexEFEFEF))
                                     .padding(.leading, 16)
                                     .padding(.trailing, 16)
                             }
@@ -67,8 +68,10 @@ struct MoneyModifyView: View {
                                     Spacer()
                                 }
                                 TextEditor(text: $item.detail)
-                                    .frame(maxWidth: .infinity)
-                                    .frame(height: 90)
+                                    .scrollContentBackground(.hidden)
+                                    .background(Color.hexEFEFEF)
+//                                    .frame(maxWidth: .infinity)
+//                                    .frame(height: 90)
                                     .cornerRadius(10)
                                     .padding(.init(top: 8, leading: 16, bottom: 16, trailing: 16))
                             }
@@ -77,7 +80,7 @@ struct MoneyModifyView: View {
                         .frame(height: 244)
                         .background(
                             RoundedRectangle(cornerRadius: 10)
-                                .fill(.gray))
+                                .fill(Color.hex886D5A))
                     }
                 }
                 
@@ -95,7 +98,7 @@ struct MoneyModifyView: View {
                             .foregroundColor(.black)
                             .background(
                                 RoundedRectangle(cornerRadius: 10)
-                                    .fill(Color.gray))
+                                    .fill(Color.hex677775))
                     }
                     
                     Button {
@@ -108,7 +111,7 @@ struct MoneyModifyView: View {
                             .foregroundColor(.black)
                             .background(
                                 RoundedRectangle(cornerRadius: 10)
-                                    .fill(Color.gray))
+                                    .fill(Color.hex5E3D25))
                     }
                 }
                 

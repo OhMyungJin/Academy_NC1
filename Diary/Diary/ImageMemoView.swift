@@ -25,7 +25,7 @@ struct ImageMemoView: View {
     
     // 기본 이미지 설정
     let defaultImage = UIImage(named: "이미지추가")
-    let placeholder: String = "오늘의 일기를 작성해보세요!"
+    let placeholder: String = "일기를 작성해보세요!"
     
     var body: some View {
         VStack{
@@ -51,14 +51,25 @@ struct ImageMemoView: View {
                 // 일기장 생성
                 TextEditor(text: $diary)
                     .lineSpacing(10)
-                    .border(Color.gray, width: 3)
                 
                 // TextEditor에 placeholder기능이 없어서 따로 조건문으로 생성
                 if diary.isEmpty {
-                    Text(placeholder)
-                        .foregroundColor(Color.primary.opacity(0.25))
+                    VStack{
+                        HStack{
+                            Text(placeholder)
+                                .foregroundColor(Color.primary.opacity(0.25))
+                            Spacer()
+                        }
+                        Spacer()
+                    }
+                    .padding()
                 }
+            }.overlay{
+                RoundedRectangle(cornerRadius: 10)
+                    .stroke(.white)
             }
+            .cornerRadius(10)
+            .shadow(radius: 4)
             
         }
         // 내비게이션 설정

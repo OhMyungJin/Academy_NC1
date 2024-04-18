@@ -44,6 +44,7 @@ struct PreviewView: View {
                 
                 HStack{
                     Text("지출")
+                        .foregroundColor(.hex5E3D25)
                     Spacer()
                 }
                 
