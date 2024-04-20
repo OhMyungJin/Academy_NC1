@@ -12,20 +12,6 @@ import SwiftUI
 enum Category: String, CaseIterable, Identifiable {
     case 고정비, 생활비, 활동비, 친목비, 꾸밈비, 차량비, 기여비, 예비비
     
-    // 카테고리 이름 반환
-    var category: String {
-        switch self {
-        case .고정비: return "고정비"
-        case .생활비: return "생활비"
-        case .활동비: return "활동비"
-        case .친목비: return "친목비"
-        case .꾸밈비: return "꾸밈비"
-        case .차량비: return "차량비"
-        case .기여비: return "기여비"
-        case .예비비: return "예비비"
-        }
-    }
-    
     // Identifiable 프로토콜을 충족하기 위한 id 속성
     var id: Self { self }
 }
@@ -210,12 +196,14 @@ struct MoneyView: View {
         })
     }
     
+    // 숫자만 적도록
     func formatNumberString(input: String) -> String {
         let filtered = input.filter { "0123456789".contains($0) }
         let number = numberFormatter.number(from: filtered)
         return numberFormatter.string(from: number ?? 0) ?? ""
     }
     
+    // 빈칸 없이
     func isRequiredFieldsEmpty() -> Bool {
         for item in expenseItems {
             if item.price.isEmpty || item.detail.isEmpty {

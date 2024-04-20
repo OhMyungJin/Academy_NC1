@@ -157,10 +157,8 @@ struct LookBackView: View {
                 loadDiaryData()
                 loadMoneyData()
                 loadFeelsData()
-                
-                if let memo = diary.first?.memo {
-                    self.diaryMemo = memo
-                }
+
+                self.diaryMemo = (diary.first?.memo)!
                 
                 self.happy = Int(feels.first!.happy)
                 self.sad = Int(feels.first!.sad)

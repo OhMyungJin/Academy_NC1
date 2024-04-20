@@ -73,7 +73,7 @@ struct PreviewView: View {
                     ForEach($expenseItems, id: \.id) { $item in
                         HStack{
                             // 카테고리 출력
-                            Text(item.category.category)
+                            Text(item.category.rawValue)
                             Spacer()
                             // 가격 출력
                             Text("\(item.price)원")
@@ -141,7 +141,7 @@ struct PreviewView: View {
         for item in expenseItems {
             let newMoney = Money(context: viewContext)
             newMoney.dateString = dateFormat
-            newMoney.category = item.category.category
+            newMoney.category = item.category.rawValue
             newMoney.price = item.price
             newMoney.detail = item.detail
         }

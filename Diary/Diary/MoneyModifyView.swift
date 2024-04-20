@@ -183,7 +183,7 @@ struct MoneyModifyView: View {
             for item in expenseItems {
                 let newMoney = Money(context: viewContext)
                 newMoney.dateString = dateFormat
-                newMoney.category = item.category.category
+                newMoney.category = item.category.rawValue
                 newMoney.price = item.price
                 newMoney.detail = item.detail
             }
@@ -195,12 +195,14 @@ struct MoneyModifyView: View {
         }
     }
     
+    // 숫자만 적도록
     func formatNumberString(input: String) -> String {
         let filtered = input.filter { "0123456789".contains($0) }
         let number = numberFormatter.number(from: filtered)
         return numberFormatter.string(from: number ?? 0) ?? ""
     }
     
+    // 빈칸 없이
     func isRequiredFieldsEmpty() -> Bool {
         for item in expenseItems {
             if item.price.isEmpty || item.detail.isEmpty {
