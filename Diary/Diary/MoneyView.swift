@@ -63,23 +63,27 @@ struct MoneyView: View {
                                     .frame(height: 40)
                                     .padding(.leading, 20)
                                     .padding(.top, 8)
-//                                    .foregroundColor(.white)
-                                // Picker를 사용하여 분류 선택
-                                Picker(
-                                    "category",
-                                    selection: $item.category
-                                ){
+                                // 카테고리 선택
+                                Menu {
                                     ForEach(Category.allCases) { category in
-                                        Text(category.rawValue.capitalized)
+                                        Button(category.rawValue.capitalized) {
+                                            item.category = category
+                                        }
                                     }
+                                } label: {
+                                    HStack {
+                                        Text(item.category.rawValue.capitalized) // 제목
+                                            .foregroundColor(.black)
+
+                                        Image(systemName: "chevron.down") // 아이콘
+                                            .foregroundColor(.black)
+                                    }
+                                    .foregroundColor(.black) // 글자 색 변경
+                                    .frame(maxWidth: .infinity) // 전체 너비를 사용
+                                    .frame(height: 40)
+                                    .background(RoundedRectangle(cornerRadius: 10).fill(Color.hexEFEFEF))
+                                    .padding(.init(top: 16, leading: 16, bottom: 8, trailing: 16))
                                 }
-                                .pickerStyle(.automatic)
-                                .accentColor(.black)
-                                .frame(maxWidth: .infinity)
-                                .frame(height: 40)
-                                .background(RoundedRectangle(cornerRadius: 10)
-                                    .fill(Color.hexEFEFEF))
-                                .padding(.init(top: 16, leading: 16, bottom: 8, trailing: 16))
                             }
                             
                             // 가격 입력
